@@ -12,31 +12,34 @@ var three = 3
 var numbers = [one, two, three]
 
 example(of: "just, of, from") {
+    let _ = Observable.just(one)
+    let _ = Observable.of(one, two, three)
+    let _ = Observable.of(numbers)
+    let _ = Observable.from(numbers)
     
-    let just = Observable.just(one)
-    let of = Observable.of(one, two, three)
-    let ofArray = Observable.of(numbers)
-    let from = Observable.from(numbers)
-    
-    /* NOTE:
-     printMe is a custom extension on the Observable class.
-     It uses the RxSwift `subscribe` function to print the elements which will be explained below
-     It is used here as the above statements by themselves do not provide an output
-    */
-    just.printMe(tag: "Just")
-    of.printMe(tag: "Of")
-    ofArray.printMe(tag: "Of array")
-    from.printMe(tag: "From array")
+    /*
+     Note how there is no output in the console here, this is because there is no subscriber listening for the events!
+     We cover subscribers in the function below
+     */
 }
 
 example(of: "subscribe") {
-    
     let observable = Observable.of(one, two, three)
     
     observable.subscribe(onNext: { element in
         print(element)
     })
+    
+    /*
+     Now we have subscribed and added a print on receiving each next event, we can see the elements output in the console
+     */
 }
+
+
+/*
+ An Empty observable is simply an observable with no elements. As a type is required, we use `Void` to declare it.
+ An Empty observable will never emit next events but will emit completed/terminated events.
+ */
 
 example(of: "empty") {
     let observable = Observable<Void>.empty()
@@ -47,6 +50,12 @@ example(of: "empty") {
         print("Completed")
     })
 }
+
+
+/*
+ A Never observable is similar to an Empty observable; it has no values and will not emit next events.
+ The difference here though is that it does not emit completed events as it never terminates!
+ */
 
 example(of: "never") {
     let observable = Observable<Any>.never()
@@ -71,8 +80,7 @@ example(of: "range") {
     let observable = Observable<Int>.range(start: 1, count: 10)
     
     observable.subscribe(onNext: { i in
-        let fibonacci = fibonacciNumber(from: i)
-        print(fibonacci)
+        print(fibonacciNumber(from: i))
     })
 }
 

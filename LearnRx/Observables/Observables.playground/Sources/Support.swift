@@ -26,15 +26,3 @@ func fibonacciNumbers(from n: Int) -> [Int] {
     }
     return fib
 }
-
-extension Observable {
-    public func printMe(tag: String?) {
-        self.subscribe(onNext: { element in
-            if let tag = tag {
-                print("\(tag): \(element)")
-            } else {
-                print(element)
-            }
-        }).disposed(by: DisposeBag())
-    }
-}

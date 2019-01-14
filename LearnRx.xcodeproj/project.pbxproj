@@ -31,6 +31,7 @@
 		F442F22A21E7A17C0039B867 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		F4E1984221ECA33D00815E67 /* ObservablesCheatSheet.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservablesCheatSheet.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F4E1984321ECDECD00815E67 /* ObservableChallengesplayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservableChallengesplayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F4E1984521ECEF2E00815E67 /* Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Subjects.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +86,7 @@
 			children = (
 				F442F22A21E7A17C0039B867 /* README.txt */,
 				F4E1984121ECA31300815E67 /* Observables */,
+				F4E1984421ECEF0A00815E67 /* Subjects */,
 				F442F21721E79FE00039B867 /* AppDelegate.swift */,
 				F442F21921E79FE00039B867 /* ViewController.swift */,
 				F442F21B21E79FE00039B867 /* Main.storyboard */,
@@ -103,6 +105,14 @@
 				F4E1984221ECA33D00815E67 /* ObservablesCheatSheet.playground */,
 			);
 			path = Observables;
+			sourceTree = "<group>";
+		};
+		F4E1984421ECEF0A00815E67 /* Subjects */ = {
+			isa = PBXGroup;
+			children = (
+				F4E1984521ECEF2E00815E67 /* Subjects.playground */,
+			);
+			path = Subjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

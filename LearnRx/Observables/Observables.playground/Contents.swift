@@ -66,6 +66,7 @@ You can refer back to the above examples if needed, bonus points if you don't ha
  
         CHALLENGE       */
 
+
 example(of: "range") {
     let observable = Observable<Int>.range(start: 1, count: 10)
     
@@ -245,10 +246,10 @@ example(of: "Maybe") {
             if let number = Int("1") {
                 maybe(.success(number))
             } else {
-                maybe(.completed)
+                maybe(.error(MaybeError.badError))
             }
         } else {
-            maybe(.error(MaybeError.badError))
+            maybe(.completed)
         }
         
         return Disposables.create()

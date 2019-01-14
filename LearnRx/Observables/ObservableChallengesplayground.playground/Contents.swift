@@ -6,16 +6,46 @@
 
 import RxSwift
 
-/*      CHALLENGES      */
-
+/*      CHALLENGE 1: Never
+ 
+ In this first challenge, you should attempt to subscribe to this Never Observable. In the examples we only used a .subscribe(onNext:) method but for this challenge you should attempt to use the .do(...) method in addition to (and before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
+ 
+ You should see that it provides side effects not included in the .subscribe method. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
+ 
+ Tip:
+ Don't forget to dispose of the subscription afterwards! You can achieve this with a DisposeBag or directly with .dispose()
+ 
+ */
 
 example(of: "Challenge 1: Never") {
+    let _ = Observable<Any>.never()
     
 }
+
+
+
+
+
+/*      CHALLENGE 2: Debug Operator
+ Once you have completed the above challenge, copy and paste the code into the below function.
+ 
+ There is an Rx debug operator .debug(), you can use this operator to view any outputs created from events such as onSubscribe, similar to the above code.
+ 
+ To complete this challenge, replace the .do() operator with the .debug() operator
+ 
+ Tips:
+ Remember: You still need to keep the subscription!
+ 
+ */
 
 example(of: "Challenge 2: Never") {
     
 }
+
+
+
+
+
 
 /*      CHALLENGE 3a: Single
 
@@ -47,12 +77,20 @@ func loadText(from filename: String) {
     
 }
 
+
+
+
+
+
 /*      CHALLENGE 3b
  
  Now we have a function that returns a Single, we should create an example() function that handles the response.
  
  You should create a function that subscribes to the returned Single and prints out the contents on success or the error on a failure.
  
+ Tips:
+ Use .subscribe { response in }
+ Create a switch case on the response for the different events i.e. success/error
  */
 
 example(of: "Challenge 3b") {

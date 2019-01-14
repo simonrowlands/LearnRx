@@ -17,23 +17,19 @@ example(of: "Challenge 1: Never") {
         }, onDispose: {
             print("Disposed!")
         })
-        .subscribe(onNext: { element in
+        .subscribe { element in
             print(element)
-        }, onCompleted: {
-            print("Completed")
-        }).disposed(by: DisposeBag())
-}
+        }.dispose()
+    }
 
 example(of: "Challenge 2: Never") {
     let observable = Observable<Any>.never()
     
     observable
         .debug("Challenge 2 Debug", trimOutput: true)
-        .subscribe(onNext: { element in
+        .subscribe { element in
             print(element)
-        }, onCompleted: {
-            print("Completed")
-        }).disposed(by: DisposeBag())
+        }.dispose()
 }
 
 /*      CHALLENGE 2     */

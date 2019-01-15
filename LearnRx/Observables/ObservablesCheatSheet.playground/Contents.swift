@@ -83,9 +83,9 @@ example(of: "Challenge 2b") {
     
     let disposeBag = DisposeBag()
     
-    loadText(from: "myTextFile").subscribe { single in
+    loadText(from: "myTextFile").subscribe { response in
         
-        switch single {
+        switch response {
         case .success(let string):
             print(string)
             

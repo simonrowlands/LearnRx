@@ -8,9 +8,22 @@ import RxSwift
 
 /*      CHALLENGE CHEAT SHEET      */
 
-example(of: "Challenge 1: Never") {
-    let observable = Observable<Any>.never()
-    
+let one = 1
+let two = 2
+let three = 3
+
+example(of: "Challenge 1a: Subscribe") {
+    let _ = Observable<Int>.of(one, two, three)
+
+    observable
+        .subscribe { element in
+            print(element)
+        }.dispose()
+}
+
+example(of: "Challenge 1b: Do") {
+    let _ = Observable<Int>.of(one, two, three)
+
     observable
         .do(onSubscribed: {
             print("Subscribed!")
@@ -20,13 +33,13 @@ example(of: "Challenge 1: Never") {
         .subscribe { element in
             print(element)
         }.dispose()
-    }
+}
 
-example(of: "Challenge 2: Never") {
+example(of: "Challenge 1c: Debug") {
     let observable = Observable<Any>.never()
     
     observable
-        .debug("Challenge 2 Debug", trimOutput: true)
+        .debug("Challenge 1 Debug", trimOutput: true)
         .subscribe { element in
             print(element)
         }.dispose()
@@ -34,7 +47,7 @@ example(of: "Challenge 2: Never") {
 
 /*      CHALLENGE 2     */
 
-// Challenge 3a: Single
+// Challenge 2a: Single
 func loadText(from filename: String) -> Single<String> {
     
     enum FileReadError: Error {
@@ -65,8 +78,8 @@ func loadText(from filename: String) -> Single<String> {
     }
 }
 
-// Challenge 3b: Single
-example(of: "Challenge 3b") {
+// Challenge 2b: Single
+example(of: "Challenge 2b") {
     
     let disposeBag = DisposeBag()
     

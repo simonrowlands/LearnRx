@@ -70,7 +70,7 @@ example(of: "never") {
 
 /*      CHALLENGE
 
-You should now be able to attempt challenges 1 & 2 in the `ObservableChallenges` playground located in this group folder.
+You should now be able to attempt challenge 1 in the `ObservableChallenges` playground located in this group folder.
 You can refer back to the above examples if needed, bonus points if you don't have to!
  
         CHALLENGE       */

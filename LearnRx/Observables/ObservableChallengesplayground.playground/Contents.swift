@@ -6,27 +6,40 @@
 
 import RxSwift
 
-/*      CHALLENGE 1: Never
+/*      CHALLENGE 1a: Subscribe
  
- In this first challenge, you should attempt to subscribe to this Never Observable. In the examples we only used a .subscribe(onNext:) method but for this challenge you should attempt to use the .do(...) method in addition to (and before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
- 
- You should see that it provides side effects not included in the .subscribe method. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
+ In this first challenge, you should attempt to subscribe to the below Observable using the onNext: handler.
  
  Tip:
  Don't forget to dispose of the subscription afterwards! You can achieve this with a DisposeBag or directly with .dispose()
  
  */
 
-example(of: "Challenge 1: Never") {
-    let _ = Observable<Any>.never()
+let one = 1
+let two = 2
+let three = 3
+
+example(of: "Challenge 1a: Subscribe") {
+    let _ = Observable<Int>.of(one, two, three)
     
 }
 
+/*      CHALLENGE 1b: Do
+ 
+ In the examples we only used a .subscribe(onNext:) operator but for this challenge you should attempt to use the .do(...) operator in addition to (and notably before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
+ 
+ You should see that it provides side effects not included in the .subscribe method. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
+ 
+ */
+
+example(of: "Challenge 1b: Do") {
+    let _ = Observable<Int>.of(one, two, three)
+
+}
 
 
-
-
-/*      CHALLENGE 2: Debug Operator
+/*      CHALLENGE 2: Debug
+ 
  Once you have completed the above challenge, copy and paste the code into the below function.
  
  There is an Rx debug operator .debug(), you can use this operator to view any outputs created from events such as onSubscribe, similar to the above code.
@@ -38,7 +51,7 @@ example(of: "Challenge 1: Never") {
  
  */
 
-example(of: "Challenge 2: Never") {
+example(of: "Challenge 1c: Debug") {
     
 }
 
@@ -47,7 +60,7 @@ example(of: "Challenge 2: Never") {
 
 
 
-/*      CHALLENGE 3a: Single
+/*      CHALLENGE 2a: Single
 
  A good example to use is a function that loads text from a file, this may succeed with a value or fail with an error and so it is well suited to a Single.
  
@@ -82,7 +95,7 @@ func loadText(from filename: String) {
 
 
 
-/*      CHALLENGE 3b
+/*      CHALLENGE 2b
  
  Now we have a function that returns a Single, we should create an example() function that handles the response.
  

@@ -20,8 +20,8 @@ import RxSwift
  
  // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here
  
- Subjects differ in the way that they emit next events, they do not differ in the way they emit stop events:
- All subjects will re-emit stop/completed events to new subscribers meaning that all future subscribers will be notified that the subject has been terminated.
+ Subject traits differ in the way that they emit next events, they do not differ in the way they emit stop events:
+ All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be notified that the subject has been terminated.
 */
 
 
@@ -35,12 +35,11 @@ import RxSwift
  */
 
 example(of: "Publish Subject") {
-    
     let disposeBag = DisposeBag()
     
     let subject = PublishSubject<String>()
     
-    // You can cast the subject to an observable as it is an Observable subclass
+    // You can cast the subject as it inherits from Observable
     let observable: Observable<String> = subject
     
     subject.onNext("Number one") // This value is emitted (but unused), despite there being no subscriber
@@ -51,9 +50,6 @@ example(of: "Publish Subject") {
     
     subject.onNext("Number two")
 }
-
-
-
 
 
 /*      Behaviour Subject
@@ -78,10 +74,6 @@ example(of: "Behaviour Subject") {
     
     subject.onNext("Number three")
 }
-
-
-
-
 
 
 /*      Replay Subject

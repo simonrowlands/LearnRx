@@ -115,3 +115,27 @@ example(of: "FlatMap") {
             print("Line length: \($0)")
         }).disposed(by: disposeBag)
 }
+
+/*
+ As mentioned earlier, you can combine different operators together
+ In this example, the "FlatMap" example has been duplicated with a .map operation added to it
+ The map operation is applied to each element emitted from the Observer
+ */
+example(of: "FlatMap + Map") {
+    let disposeBag = DisposeBag()
+    
+    let numberList = Observable.of(1, 2, 3, 4, 5)
+    
+    func doSomeRxLogic(on number: Int) -> Observable<Int> { // Emits two events
+        return Observable.of(number * 10, number * 100)
+    }
+    
+    numberList
+        .flatMap {
+            doSomeRxLogic(on: $0)
+        }.map { number in
+            number / 10
+        }.subscribe(onNext: {
+            print("Line length: \($0)")
+        }).disposed(by: disposeBag)
+}

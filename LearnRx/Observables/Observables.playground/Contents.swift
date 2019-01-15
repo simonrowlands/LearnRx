@@ -122,13 +122,13 @@ example(of: "dispose") { // Manually disposing
 example(of: "DisposeBag") { // Automatically disposing
     let disposeBag = DisposeBag()
     
-    Observable.of("A", "B", "C").subscribe {
-        print($0)
-    }.disposed(by: disposeBag)
+    Observable.of("A", "B", "C").subscribe(onNext: { letter in
+        print(letter)
+    }).disposed(by: disposeBag)
     
-    Observable.of("D", "E", "F").subscribe {
-        print($0)
-    }.disposed(by: disposeBag)
+    Observable.of("D", "E", "F").subscribe(onNext: { letter in
+        print(letter)
+    }).disposed(by: disposeBag)
 }
 
 /*

@@ -16,9 +16,9 @@ example(of: "Challenge 1a: Subscribe") {
     let observable = Observable.of(one, two, three)
 
     observable
-        .subscribe { element in
+        .subscribe(onNext: { element in
             print(element)
-        }.dispose()
+        }).dispose()
 }
 
 example(of: "Challenge 1b: Do") {
@@ -30,9 +30,9 @@ example(of: "Challenge 1b: Do") {
         }, onDispose: {
             print("Disposed!")
         })
-        .subscribe { element in
+        .subscribe(onNext: { element in
             print(element)
-        }.dispose()
+        }).dispose()
 }
 
 example(of: "Challenge 1c: Debug") {
@@ -40,9 +40,9 @@ example(of: "Challenge 1c: Debug") {
     
     observable
         .debug("Challenge 1c Debug", trimOutput: true)
-        .subscribe { element in
+        .subscribe(onNext: { element in
             print(element)
-        }.dispose()
+        }).dispose()
 }
 
 /*      CHALLENGE 2     */

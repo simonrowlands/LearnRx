@@ -101,3 +101,8 @@ example(of: "Replay Subject") {
     
     subject.onNext("Number five")
 }
+
+/*
+ To complete this chapter, attempt the challenges in the SubjectsChallenges playground located within this folder.
+ There are only two challenges!
+ */

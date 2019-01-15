@@ -89,7 +89,7 @@ You can refer back to the above examples if needed, bonus points if you don't ha
  */
 
 example(of: "range") {
-    let observable = Observable<Int>.range(start: 1, count: 10)
+    let observable = Observable.range(start: 1, count: 10)
     
     observable.subscribe(onNext: { i in
         print(fibonacciNumber(from: i))

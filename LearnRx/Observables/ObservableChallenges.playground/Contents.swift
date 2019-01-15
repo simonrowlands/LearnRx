@@ -20,7 +20,7 @@ let two = 2
 let three = 3
 
 example(of: "Challenge 1a: Subscribe") {
-    let _ = Observable<Int>.of(one, two, three)
+    let _ = Observable.of(one, two, three)
     
 }
 
@@ -33,7 +33,7 @@ example(of: "Challenge 1a: Subscribe") {
  */
 
 example(of: "Challenge 1b: Do") {
-    let _ = Observable<Int>.of(one, two, three)
+    let _ = Observable.of(one, two, three)
 
 }
 

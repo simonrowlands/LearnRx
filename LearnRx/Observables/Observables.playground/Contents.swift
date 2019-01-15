@@ -55,6 +55,7 @@ example(of: "empty") {
 /*
  A Never observable is similar to an Empty observable; it has no values and will not emit next events.
  The difference here though is that it does not emit completed events as it never terminates!
+ Try running the playground; you will see that there is no "Completed" log below
  */
 
 example(of: "never") {
@@ -76,6 +77,17 @@ You can refer back to the above examples if needed, bonus points if you don't ha
         CHALLENGE       */
 
 
+
+/*
+ There are several initializers for observables as we have seen above, there are some more covered below
+ Most of these are self explanatory but are covered for clarity and reference
+ */
+
+/*
+ You can declare an observable with a range, this will give the observable a sequence using the values of the range i.e. 1 - 10
+ This is the same as declaring an Observable using .of(1, 2, 3...)
+ */
+
 example(of: "range") {
     let observable = Observable<Int>.range(start: 1, count: 10)
     
@@ -84,12 +96,28 @@ example(of: "range") {
     })
 }
 
+/*
+ Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription (or Disposable) keeps a strong reference to the Observable. This means that there is a retain cycle: If the user tries to pop a view using Observables from the navigation stack, the Observables will never be de-allocated.
+ 
+ RxSwift counters this issue with its own deallocation method: dispose() as shown below
+ 
+ This disposes of the Subscription immediately meaning that you could keep this code in the ViewControllers deinit method to dispose the Subscriptions on navigating backwards
+ 
+ */
+
 example(of: "dispose") { // Manually disposing
-    let observable = Observable.of("A", "B", "C").subscribe {
-        print($0)
-    }
+    let observable = Observable.of("A", "B", "C").subscribe(onNext: { element in
+        print(element)
+    }, onDisposed: {
+        print("Disposed!")
+    })
     observable.dispose()
 }
+
+/*
+ There is a more convenient way of handling the disposal of subscriptions, this is the Rx class `DisposeBag`
+ DisposeBags track all of the disposables that are added to them and disposes them all when it is deinitialised
+ */
 
 example(of: "DisposeBag") { // Automatically disposing
     let disposeBag = DisposeBag()
@@ -101,6 +129,45 @@ example(of: "DisposeBag") { // Automatically disposing
     Observable.of("D", "E", "F").subscribe {
         print($0)
     }.disposed(by: disposeBag)
+}
+
+/*
+ This does cause further potential for a retain cycle however; you must be careful not to use disposed(by:) when the subscription has a strong reference to the ViewController
+ 
+ This is because the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription has a strong reference to the ViewController
+ 
+ You can avoid this by using .dispose() or using a weak reference within the Subscription
+ 
+ Below are some examples of these scenarios
+ */
+
+example(of: "DisposeBag retain cycle") {
+    
+    class HomeViewController: UIViewController {
+        
+        let numberLabel: UILabel? = nil
+        
+        let disposeBag = DisposeBag() // Strong reference ViewController -> DisposeBag
+        
+        let one = 1
+        let two = 2
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            let observable = Observable.of(one, two)
+            
+            // Bad
+            observable.subscribe(onNext: { element in
+                self.numberLabel?.text = "\(element)" // Strong reference Subscription -> ViewController
+            }).disposed(by: disposeBag) // Strong reference DisposeBag -> Subscription
+            
+            // Good
+            observable.subscribe(onNext: { [weak self] element in
+                self?.numberLabel?.text = "\(element)" // WEAK reference Subscription -> ViewController
+            }).disposed(by: disposeBag) // Strong reference DisposeBag -> Subscription
+        }
+    }
 }
 
 example(of: "create") {

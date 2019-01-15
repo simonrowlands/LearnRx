@@ -170,26 +170,13 @@ example(of: "DisposeBag retain cycle") {
     }
 }
 
-example(of: "create") {
-    let disposeBag = DisposeBag()
-    
-    enum MyError: Error {
-        case anError
-    }
-    
-    Observable<String>.create { observer in
-        observer.onNext("1")
-        observer.onError(MyError.anError)
-        observer.onCompleted()
-        observer.onNext("?")
-        return Disposables.create()
-    }.subscribe(
-        onNext: { print($0) },
-        onError: { print($0) },
-        onCompleted: { print("Completed") },
-        onDisposed: { print("Disposed")
-    }).disposed(by: disposeBag)
-}
+/*
+ Using the .deferred method, you can create a factory that returns an Observable within its closure.
+ 
+ This allows us to use a different Observable depending on a condition or a state, in the below example we are returning a different Observable depending on the state of the `flip` bool.
+ 
+ This is useful in the scenario when you need to retrieve the Observable at a future point in time and at that point return a different Observable depending on a condition
+ */
 
 example(of: "deferred") {
     let disposeBag = DisposeBag()
@@ -207,39 +194,53 @@ example(of: "deferred") {
     }
     
     func subscribe(to observable: Observable<Int>) {
-        for _ in 0...2 {
-            observable.subscribe(onNext: {
-                print($0, terminator: "")
-            }).disposed(by: disposeBag)
-            print("")
-        }
+        observable.subscribe(onNext: { element in
+            print(element)
+        }).disposed(by: disposeBag)
         print()
     }
     
-    subscribe(to: factory)
-    subscribe(to: factory)
-    subscribe(to: factory)
+    subscribe(to: factory) // Flips the bool, prints 1 2 3
+    subscribe(to: factory) // Flips the bool, prints 4 5 6
+    subscribe(to: factory) // Flips the bool, prints 1 2 3
 }
 
 /*
- There are three kinds of traits in RxSwift: Single, Maybe, and Completable.
+ Now we have looked at the available convenience initializers for observables, it is time to create our own!
+ 
+ The .create() method allows us to implement the result of calling .subscribe on the Observable.
+ 
+ As mentioned earlier, Subscriptions are actually of Disposable type and .create() requires a Disposable to be returned. We can use the convenience Disposable initializer: Disposables.create()
+ */
+
+example(of: "create") {
+    let disposeBag = DisposeBag()
+    
+    enum MyError: Error {
+        case anError
+    }
+    
+    Observable<String>.create { observer in
+        observer.onNext("1")
+        observer.onError(MyError.anError)
+        observer.onCompleted()  // Note how this and the line below is not printed as the error has already terminated the Subscription
+        observer.onNext("?")
+        return Disposables.create()
+    }.subscribe(
+        onNext: { print($0) },
+        onError: { print($0) },
+        onCompleted: { print("Completed") },
+        onDisposed: { print("Disposed")
+    }).disposed(by: disposeBag)
+}
+
+/* There are three kinds of traits in RxSwift: Single, Maybe, and Completable.
  
  Singles
  Singles will emit either a .success(value) or an .error event.
- .success(value) is actually a combination of the .next and .completed events.
+ The .success(value) is actually a combination of the .next and .completed events.
  This is useful for one-time processes that will either succeed and yield a value or fail, such as downloading data or loading it from disk.
- 
- Completables
- A Completable will only emit a .completed or .error event.
- It doesn't emit any value.
- You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
- 
- Maybes
- Maybe is a mashup of a Single and Completable.
- It can either emit a .success(value), .completed, or .error.
- If you need to implement an operation that could either succeed or fail, and optionally return a value on success, then Maybe is your ticket.
  */
-
 
 example(of: "Single") {
     
@@ -273,6 +274,12 @@ example(of: "Single") {
     }.disposed(by: disposeBag)
 }
 
+/* Completables
+ A Completable will only emit a .completed or .error event.
+ It doesn't emit any value.
+ You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
+*/
+
 example(of: "Completable") {
     
     let disposeBag = DisposeBag()
@@ -304,6 +311,13 @@ example(of: "Completable") {
         }
     }.disposed(by: disposeBag)
 }
+
+/*
+ Maybes
+ Maybe is a mashup of a Single and Completable.
+ It can either emit a .success(value), .completed, or .error.
+ If you need to implement an operation that could either succeed or fail, and optionally return a value on success, then Maybe is your ticket.
+ */
 
 example(of: "Maybe") {
     
@@ -346,7 +360,7 @@ example(of: "Maybe") {
 
 /*      CHALLENGE
  
- To finish off the Observables chapter you should now be able to attempt challenges 3a & 3b in the `ObservableChallenges` playground located in this group folder.
+ To finish off the Observables chapter you should now be able to attempt challenges 2a & 2b in the `ObservableChallenges` playground located in this group folder.
  
  You can refer back to the above examples if needed, as always bonus points if you don't have to!
  

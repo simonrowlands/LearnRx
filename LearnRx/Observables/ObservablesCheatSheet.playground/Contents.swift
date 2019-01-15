@@ -13,7 +13,7 @@ let two = 2
 let three = 3
 
 example(of: "Challenge 1a: Subscribe") {
-    let _ = Observable<Int>.of(one, two, three)
+    let observable = Observable<Int>.of(one, two, three)
 
     observable
         .subscribe { element in
@@ -22,7 +22,7 @@ example(of: "Challenge 1a: Subscribe") {
 }
 
 example(of: "Challenge 1b: Do") {
-    let _ = Observable<Int>.of(one, two, three)
+    let observable = Observable<Int>.of(one, two, three)
 
     observable
         .do(onSubscribed: {
@@ -39,7 +39,7 @@ example(of: "Challenge 1c: Debug") {
     let observable = Observable<Any>.never()
     
     observable
-        .debug("Challenge 1 Debug", trimOutput: true)
+        .debug("Challenge 1c Debug", trimOutput: true)
         .subscribe { element in
             print(element)
         }.dispose()

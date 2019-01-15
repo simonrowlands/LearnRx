@@ -247,7 +247,7 @@ example(of: "Single") {
     let disposeBag = DisposeBag()
     
     enum SingleError: Error {
-        case badError
+        case anError
     }
     
     let condition = true
@@ -255,9 +255,9 @@ example(of: "Single") {
     Single<String>.create { single in
         
         if condition {
-            single(.success("Mathematics!"))
+            single(.success("Success!"))
         } else {
-            single(.error(SingleError.badError))
+            single(.error(SingleError.anError))
         }
         
         return Disposables.create()
@@ -285,7 +285,7 @@ example(of: "Completable") {
     let disposeBag = DisposeBag()
     
     enum CompletableError: Error {
-        case badError
+        case anError
     }
     
     let condition = true
@@ -295,7 +295,7 @@ example(of: "Completable") {
         if condition {
             completable(.completed)
         } else {
-            completable(.error(CompletableError.badError))
+            completable(.error(CompletableError.anError))
         }
         
         return Disposables.create()
@@ -324,7 +324,7 @@ example(of: "Maybe") {
     let disposeBag = DisposeBag()
     
     enum MaybeError: Error {
-        case badError
+        case cannotCast
     }
     
     let condition = true
@@ -335,7 +335,7 @@ example(of: "Maybe") {
             if let number = Int("1") {
                 maybe(.success(number))
             } else {
-                maybe(.error(MaybeError.badError))
+                maybe(.error(MaybeError.cannotCast))
             }
         } else {
             maybe(.completed)

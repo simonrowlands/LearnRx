@@ -87,7 +87,6 @@ example(of: "Map") {
 
 example(of: "FlatMap") {
     let disposeBag = DisposeBag()
-    
     let numberList = Observable.range(start: 1, count: 5)
 
     func doSomeRxLogic(on number: Int) -> Observable<Int> { // Emits two events
@@ -115,7 +114,6 @@ example(of: "FlatMap") {
 
 example(of: "FlatMap + Map") {
     let disposeBag = DisposeBag()
-    
     let numberList = Observable.range(start: 1, count: 5)
 
     func doSomeRxLogic(on number: Int) -> Observable<Int> { // Emits two events
@@ -140,7 +138,6 @@ example(of: "FlatMap + Map") {
 
 example(of: "Buffer") {
     let disposeBag = DisposeBag()
-    
     let numberList = Observable.range(start: 1, count: 5)
 
     numberList
@@ -159,7 +156,6 @@ example(of: "Buffer") {
 
 example(of: "Scan") {
     let disposeBag = DisposeBag()
-    
     let numberList = Observable.range(start: 0, count: 10)
     
     numberList

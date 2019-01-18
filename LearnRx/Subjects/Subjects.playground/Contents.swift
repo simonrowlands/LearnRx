@@ -8,9 +8,9 @@ import RxSwift
 
 /*      SUBJECTS
  
- When you use an Observable it only emits an output. You can subscribe to an observables output, but you can’t change it.
+ When you create an Observable it only emits an output. You can subscribe to an observables output, but you cannot alter it.
  
- A Subject is an observable which can also take inputs; meaning that you can manually emit new elements, rather than just monitoring its outputs.
+ A Subject is an Observable which can also take new inputs; meaning that you can manually emit new elements, rather than just monitoring the outputs.
  
  Similar to Observables, Subjects have several traits available to them. These traits are:
  
@@ -20,8 +20,8 @@ import RxSwift
  
  // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here
  
- Subject traits differ in the way that they emit next events, they do not differ in the way they emit stop events:
- All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be notified that the subject has been terminated.
+ Subject traits differ in the way that they emit next events, they do not differ in the way they emit stop/completed events:
+ All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be immediately notified that a subject has been terminated.
 */
 
 
@@ -31,7 +31,7 @@ import RxSwift
  
  Publish Subjects only emit new next events to subscribers. It will not replay any previous next events.
  This is useful when you only want to receive live events and do not care about previous ones.
- 
+
  */
 
 example(of: "Publish Subject") {
@@ -42,7 +42,7 @@ example(of: "Publish Subject") {
     // You can cast the subject as it inherits from Observable
     let observable: Observable<String> = subject
     
-    subject.onNext("Number one") // This value is emitted (but unused), despite there being no subscriber
+    subject.onNext("Number one") // This value is added to the emission stream despite there being no subscriber
     
     observable.subscribe(onNext: { text in
         print(text)

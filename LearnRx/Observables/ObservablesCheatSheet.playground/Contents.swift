@@ -8,21 +8,22 @@ import RxSwift
 
 /*      CHALLENGE CHEAT SHEET      */
 
-let one = 1
-let two = 2
-let three = 3
-
+/*
+ let observable = Observable.just(1)
+ let observable = Observable.of(1, 2, 3)
+ let observable = Observable.of([1, 2, 3])
+ let observable = Observable.from([1, 2, 3])
+*/
 example(of: "Challenge 1a: Subscribe") {
-    let observable = Observable.of(one, two, three)
+    let observable = Observable.range(start: 1, count: 3)
 
-    observable
-        .subscribe(onNext: { element in
-            print(element)
-        }).dispose()
+    observable.subscribe(onNext: { element in
+        print(element)
+    }).dispose()
 }
 
 example(of: "Challenge 1b: Do") {
-    let observable = Observable.of(one, two, three)
+    let observable = Observable.range(start: 1, count: 3)
 
     observable
         .do(onSubscribed: {

@@ -12,39 +12,50 @@ import RxSwift
  
  Tip:
  Don't forget to dispose of the subscription afterwards! You can achieve this with a DisposeBag or directly with .dispose()
- 
  */
 
-let one = 1
-let two = 2
-let three = 3
-
 example(of: "Challenge 1a: Subscribe") {
-    let _ = Observable.of(one, two, three)
+    let _ = Observable.range(start: 1, count: 3)
     
 }
+
+/* Extended
+ 
+ Once you have completed the challenge; for a look into how each of these Observable emission streams are created, try replacing the Observable with some of the following to see the console output. Note how two of them have identical outputs!
+ 
+ let observable = Observable.just(1)
+ let observable = Observable.of(1, 2, 3)
+ let observable = Observable.of([1, 2, 3])
+ let observable = Observable.from([1, 2, 3])
+ */
+
+
+
+
 
 /*      CHALLENGE 1b: Do
  
  In the examples we only used a .subscribe(onNext:) operator but for this challenge you should attempt to use the .do(...) operator in addition to (and notably before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
  
- You should see that it provides side effects not included in the .subscribe method. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
+ You should see that it provides side effects for events such as `onSubscribed`. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
  
  */
 
 example(of: "Challenge 1b: Do") {
-    let _ = Observable.of(one, two, three)
-
+    let _ = Observable.range(start: 1, count: 3)
+    
 }
+
+
 
 
 /*      CHALLENGE 2: Debug
  
  Once you have completed the above challenge, copy and paste the code into the below function.
  
- There is an Rx debug operator .debug(), you can use this operator to view any outputs created from events such as onSubscribe, similar to the above code.
+ There is an Rx debug operator `.debug()`, you can use this operator to automatically print any outputs created from events such as onSubscribed, similar to the above code.
  
- To complete this challenge, replace the .do() operator with the .debug() operator
+ To complete this challenge, replace the .do(...) operator with the .debug() operator
  
  Tips:
  Remember: You still need to keep the subscription!

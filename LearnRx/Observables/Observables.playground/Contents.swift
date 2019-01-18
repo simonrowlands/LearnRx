@@ -6,16 +6,36 @@
 
 import RxSwift
 
-var one = 1
-var two = 2
-var three = 3
-var numbers = [one, two, three]
+/* RxSwift: What is it?
+ 
+ In the words of Wikipedia, Reactive Programming is:
+ Reactive programming is a programming paradigm oriented around data flows and the propagation of change. This means that it should be possible to express static or dynamic data flows with ease in the programming languages used, and that the underlying execution model will automatically propagate changes through the data flow
+ 
+ Or in short; Reactive programming is the idea that we can easily create data flows and automatically react to their changes
+ 
+ RxSwift enables such behaviour using Observables, Subscriptions and Operators, all of which are covered in this project.
+ 
+ `Observable Sequences` or `Observables`, are the data flows we use to emit data events. Everything else in Rx is based on or operates on these Observables. We use Subscriptions to receive and react to these data events and use Operators to perform logic on the data itself.
+ 
+ For now though, lets have a look at Observables and Subscriptions.
+ 
+ Run the playground up to each example to see what it is doing.
+ */
+
+
+
+/*      Observables     */
+
+/*
+ Here are some examples of how we can initialise an Observable.
+ Note that once an Observable is initialised with a value, we cannot add new values into its stream, that is covered in the next chapter `Subjects`.
+ */
 
 example(of: "just, of, from") {
-    let _ = Observable.just(one)
-    let _ = Observable.of(one, two, three)
-    let _ = Observable.of(numbers)
-    let _ = Observable.from(numbers)
+    let _ = Observable.just(1)
+    let _ = Observable.of(1, 2, 3)
+    let _ = Observable.of([1, 2, 3])
+    let _ = Observable.from([1, 2, 3])
     
     /*
      Note how there is no output in the console here, this is because there is no subscriber listening for the events!
@@ -23,8 +43,13 @@ example(of: "just, of, from") {
      */
 }
 
+/*
+ As mentioned before, we use Subscribers to receive/react to events emitted by Observables.
+ Below is a simple example of reacting to an emission via a print
+ */
+
 example(of: "subscribe") {
-    let observable = Observable.of(one, two, three)
+    let observable = Observable.of(1, 2, 3)
     
     observable.subscribe(onNext: { element in
         print(element)
@@ -37,7 +62,7 @@ example(of: "subscribe") {
 
 
 /*
- An Empty observable is simply an observable with no elements. As a type is required, we use `Void` to declare it.
+ An Empty observable is simply an observable with no elements to emit. As a type is required, we use `Void` to declare it.
  An Empty observable will never emit next events but will emit completed/terminated events.
  */
 
@@ -55,7 +80,7 @@ example(of: "empty") {
 /*
  A Never observable is similar to an Empty observable; it has no values and will not emit next events.
  The difference here though is that it does not emit completed events as it never terminates!
- Try running the playground; you will see that there is no "Completed" log below
+ Try running the playground; you will see that there is no "Completed" event log
  */
 
 example(of: "never") {
@@ -69,6 +94,7 @@ example(of: "never") {
 }
 
 
+
 /*      CHALLENGE
 
 You should now be able to attempt challenge 1 in the `ObservableChallenges` playground located in this group folder.
@@ -78,8 +104,9 @@ You can refer back to the above examples if needed, bonus points if you don't ha
 
 
 
+
 /*
- There are several initializers for observables as we have seen above, there are some more covered below
+ There are several initializers for Observables as we have seen above, there are some more covered below
  Most of these are self explanatory but are covered for clarity and reference
  */
 
@@ -97,12 +124,13 @@ example(of: "range") {
 }
 
 /*
- Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription (or Disposable) keeps a strong reference to the Observable. This means that there is a retain cycle: If the user tries to pop a view using Observables from the navigation stack, the Observables will never be de-allocated.
+ Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription keeps a strong reference to the Observable.
  
- RxSwift counters this issue with its own deallocation method: dispose() as shown below
+ We need to dispose of these Subscriptions and Observables somehow
  
- This disposes of the Subscription immediately meaning that you could keep this code in the ViewControllers deinit method to dispose the Subscriptions on navigating backwards
+ RxSwift has its own deallocation method: dispose() as shown below
  
+ This disposes of the Subscription immediately. If you were using a ViewController, you could keep this code in the ViewControllers deinit method to dispose the Subscriptions on navigating backwards
  */
 
 example(of: "dispose") { // Manually disposing
@@ -116,7 +144,7 @@ example(of: "dispose") { // Manually disposing
 
 /*
  There is a more convenient way of handling the disposal of subscriptions, this is the Rx class `DisposeBag`
- DisposeBags track all of the disposables that are added to them and disposes them all when it is deinitialised
+ DisposeBags track all of the Disposables that are added to them and disposes them when the DisposeBag is deinitialised
  */
 
 example(of: "DisposeBag") { // Automatically disposing
@@ -132,11 +160,11 @@ example(of: "DisposeBag") { // Automatically disposing
 }
 
 /*
- This does cause further potential for a retain cycle however; you must be careful not to use disposed(by:) when the subscription has a strong reference to the ViewController
+ This does cause further potential for a retain cycle however; you must be careful not to use disposed(by:) when the Subscription has a strong reference to the Observables owner
  
- This is because the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription has a strong reference to the ViewController
+ In the ViewController scenario; the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription has a strong reference to the ViewController
  
- You can avoid this by using .dispose() or using a weak reference within the Subscription
+ You can avoid this by using .dispose() or more simply using a weak reference within the Subscription
  
  Below are some examples of these scenarios
  */
@@ -147,25 +175,22 @@ example(of: "DisposeBag retain cycle") {
         
         let numberLabel: UILabel? = nil
         
-        let disposeBag = DisposeBag() // Strong reference ViewController -> DisposeBag
-        
-        let one = 1
-        let two = 2
+        let disposeBag = DisposeBag() // Strong reference, ViewController -> DisposeBag
         
         override func viewDidLoad() {
             super.viewDidLoad()
             
-            let observable = Observable.of(one, two)
+            let observable = Observable.of(1, 2)
             
             // Bad
             observable.subscribe(onNext: { element in
-                self.numberLabel?.text = "\(element)" // Strong reference Subscription -> ViewController
-            }).disposed(by: disposeBag) // Strong reference DisposeBag -> Subscription
+                self.numberLabel?.text = "\(element)" // Strong reference, Subscription -> ViewController
+            }).disposed(by: disposeBag) // Strong reference, DisposeBag -> Subscription
             
             // Good
             observable.subscribe(onNext: { [weak self] element in
-                self?.numberLabel?.text = "\(element)" // WEAK reference Subscription -> ViewController
-            }).disposed(by: disposeBag) // Strong reference DisposeBag -> Subscription
+                self?.numberLabel?.text = "\(element)" // WEAK reference, Subscription -> ViewController
+            }).disposed(by: disposeBag) // Strong reference, DisposeBag -> Subscription
         }
     }
 }
@@ -206,7 +231,7 @@ example(of: "deferred") {
 }
 
 /*
- Now we have looked at the available convenience initializers for observables, it is time to create our own!
+ Now we have looked at some of the available initializers for Observables, it is time to create our own!
  
  The .create() method allows us to implement the result of calling .subscribe on the Observable.
  
@@ -314,9 +339,8 @@ example(of: "Completable") {
 
 /*
  Maybes
- Maybe is a mashup of a Single and Completable.
- It can either emit a .success(value), .completed, or .error.
- If you need to implement an operation that could either succeed or fail, and optionally return a value on success, then Maybe is your ticket.
+ Maybe is a combination of a Single and Completable, it can either emit a .success(value), .completed, or an .error.
+ If you need to implement an operation that could either succeed or fail, and optionally return a value on success, then you should use Maybe.
  */
 
 example(of: "Maybe") {
@@ -327,19 +351,19 @@ example(of: "Maybe") {
         case cannotCast
     }
     
-    let condition = true
+    let someCondition = true
     
     Maybe<Int>.create { maybe in
         
-        if condition {
+        if someCondition {
             if let number = Int("1") {
                 maybe(.success(number))
             } else {
                 maybe(.error(MaybeError.cannotCast))
             }
-        } else {
-            maybe(.completed)
         }
+        
+        maybe(.completed) // Note how this is only called when neither of the above lines are called
         
         return Disposables.create()
         

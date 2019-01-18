@@ -18,7 +18,7 @@ import RxSwift
  
  Operators are fundamental to Rx, they enable you to react to events emitted by Observables. They can be even be chained together to form more complex processes.
  
- We will look at examples of most of the Operators, you do not have to know every single Operator, however, this playground has been created as a point of reference in the event that you need to lookup a specific one with an example.
+ We will look at examples of most of the Operators, you do not have to know all of these Operators of the top of your head, however, this playground has been created as a point of reference in the event that you need to lookup a specific one with an example.
  
  If you would like to see these Operators in diagram form, here is a great site for visualisation: http://rxmarbles.com
  If you would like the full list of Operators, here they are directly from the Rx documentation http://reactivex.io/documentation/operators.html
@@ -42,7 +42,7 @@ import RxSwift
 
 example(of: "Map") {
     let disposeBag = DisposeBag()
-    let numberList = Observable.of(1, 2, 3, 4, 5)
+    let numberList = Observable.range(start: 1, count: 5)
     
     numberList
         .map { number in
@@ -108,7 +108,9 @@ example(of: "FlatMap") {
 
 /*
  As mentioned earlier, you can combine different operators together
- In this example, the "FlatMap" example has been duplicated with a .map operation added to it
+ The "FlatMap" example has been duplicated and combined with a .map operation
+ 
+ Note:
  The map operation is applied to each element emitted from the final Observable
  */
 
@@ -134,6 +136,7 @@ example(of: "FlatMap + Map") {
  The Buffer Operator groups emissions together.
  You can group emissions by time i.e. group emissions every 5 seconds
  You can group emissions by count i.e. group every 3 emissions
+ You can group using a combination of the above
  */
 
 example(of: "Buffer") {
@@ -141,7 +144,7 @@ example(of: "Buffer") {
     let numberList = Observable.range(start: 1, count: 5)
 
     numberList
-        .buffer(timeSpan: 5, count: 3, scheduler: MainScheduler())
+        .buffer(timeSpan: 5, count: 3, scheduler: MainScheduler.instance)
         .subscribe(onNext: {
             print("Line length: \($0)")
         }).disposed(by: disposeBag)
@@ -233,6 +236,10 @@ example(of: "Distinct Until Changed") {
  Namely: Skip, Take, ElementAt
  */
 
+/*
+ Skip skips the first (n) number of emissions
+ */
+
 example(of: "Skip") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 10)
@@ -242,8 +249,15 @@ example(of: "Skip") {
         .subscribe(onNext: {
             print($0)
         }).disposed(by: disposeBag)
-    
-    print("\n->SkipWhile")
+}
+
+/*
+ SkipWhile skips every element until the condition predicate fails. Once this occurs, every future element is emitted regardless of whether it passes the predicate.
+ */
+
+example(of: "SkipWhile") {
+    let disposeBag = DisposeBag()
+    let numberList = Observable.of(5, 6, 7, 8, 9, 1, 2)
     
     numberList
         .skipWhile { number in
@@ -254,9 +268,14 @@ example(of: "Skip") {
         }).disposed(by: disposeBag)
 }
 
+/*
+ Take takes the first (n) number of elements
+ TakeLast takes the last (n) number of elements
+ */
+
 example(of: "Take") {
     let disposeBag = DisposeBag()
-    let numberList = Observable.range(start: 1, count: 10)
+    let numberList = Observable.range(start: 1, count: 5)
 
     numberList
         .take(2)
@@ -273,9 +292,13 @@ example(of: "Take") {
         }).disposed(by: disposeBag)
 }
 
+/*
+ ElementAt take the element at the specified index in the stream
+ */
+
 example(of: "ElementAt") {
     let disposeBag = DisposeBag()
-    let numberList = Observable.range(start: 1, count: 10)
+    let numberList = Observable.range(start: 1, count: 5)
 
     numberList
         .elementAt(0)
@@ -295,10 +318,10 @@ example(of: "ElementAt") {
  Sometimes you may want to combine multiple Observables into a single Observable.
  There are several Operators that handle these situations, some merging the emissions together and some merging the emission streams.
  
- Combine Latest combines the latest emissions from two or more emission streams (AKA Observable Outputs) into a single emission, resulting in what normally may be emitted as "A" and  "1, 2" into "A1, A2"
+ Combine Latest combines the latest emissions from two or more emission streams (AKA Observable Outputs) into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2"
  */
 
-example(of: "CombineLatest") { // Note how the number 1 is emitted twice here, this is because each emission causes a merge from the latest of all streams.
+example(of: "CombineLatest") { // Note how the number 1 is emitted twice here, this is because each emission causes a merge from the latest emission from each stream.
     let disposeBag = DisposeBag()
     let stringList = Observable.of("A", "B")
     let numberList = Observable.range(start: 1, count: 3)
@@ -353,8 +376,11 @@ example(of: "Merge") {
 
 
 /*
- There are only two error handling Operators; Catch and Retry.
+ There are two error handling Operators; Catch and Retry.
  They are both designed to recover from a thrown error from within an emission stream and attempt to continue observing the emissions, or return a default value.
+ 
+ Firstly we have an example of catchError that recreates the Observable and re-subscribes to the emission stream
+ Secondly we have an example of catchErrorJustReturn that emits a default value if an error occurs
  */
 
 example(of: "CatchError") {
@@ -399,6 +425,11 @@ example(of: "CatchError") {
         }).disposed(by: disposeBag)
 }
 
+/*
+ Here we have an Observable that always fails on the first emission stream and then flips the condition to succeed.
+ In the first example we can see that the retry() Operator repeatedly re-attempts the emission stream until it succeeds
+ This could cause an infinite loop which is resolved by using the next examples; retry(maxAttempts) and/or using catchErrorJustReturn()
+ */
 
 example(of: "Retry") {
     let disposeBag = DisposeBag()
@@ -431,8 +462,8 @@ example(of: "Retry") {
         }).disposed(by: disposeBag)
     
     
-    print("\n->Retry with MaxAttempts")
     
+    print("\n->Retry with MaxAttempts")
     
     let alwaysErrorObservable = Observable<Int>.create { stream in
         stream.onNext(1)
@@ -450,6 +481,7 @@ example(of: "Retry") {
             print($0)
         }).disposed(by: disposeBag)
     
+    
     print("\n->Retry with MaxAttempts and Catch")
     
     alwaysErrorObservable
@@ -458,4 +490,43 @@ example(of: "Retry") {
         .subscribe(onNext: {
             print($0)
         }).disposed(by: disposeBag)
+}
+
+
+
+
+/*      TIME-BASED OPERATORS        */
+
+
+
+/*
+ There are several time based operators/subscriptions in Rx
+ It is difficult to create examples of async operators in playground, therefore there is only one example here.
+ 
+ DelaySubscription needs a 'hot' Observable (one that emits values regardless of having a subscriber or not) to fully display its usage.
+ 
+ Delay delays the emissions of an Observable, meaning that the initial value will not be fired until after the specified amount of time
+ 
+ DelaySubscription delays the point that the subcription starts receiving values.
+ 
+ In theory this would mean that Delay would receive all values i.e. 1, 2, 3, 4 but delayed by (x) amount of time
+ DelaySubscription may not receieve all values i.e. 3, 4 depending on the delay
+ */
+
+example(of: "Delay") {
+    let intervalObservable = Observable<Int>.interval(1 / 3, scheduler: MainScheduler.instance) // This creates an incrementing output until disposed
+    
+    print("delaySubscriptionSubscribed")
+    
+    let delaySubscription = intervalObservable
+        .delay(2, scheduler: MainScheduler.instance)
+        .subscribe(onNext: {
+            print($0)
+        }, onDisposed: {
+            print("<")
+        })
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+        delaySubscription.dispose()
+    })
 }

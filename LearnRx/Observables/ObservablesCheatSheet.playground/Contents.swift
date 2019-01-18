@@ -8,9 +8,23 @@ import RxSwift
 
 /*      CHALLENGE CHEAT SHEET      */
 
-example(of: "Challenge 1: Never") {
-    let observable = Observable<Any>.never()
-    
+/*
+ let observable = Observable.just(1)
+ let observable = Observable.of(1, 2, 3)
+ let observable = Observable.of([1, 2, 3])
+ let observable = Observable.from([1, 2, 3])
+*/
+example(of: "Challenge 1a: Subscribe") {
+    let observable = Observable.range(start: 1, count: 3)
+
+    observable.subscribe(onNext: { element in
+        print(element)
+    }).dispose()
+}
+
+example(of: "Challenge 1b: Do") {
+    let observable = Observable.range(start: 1, count: 3)
+
     observable
         .do(onSubscribed: {
             print("Subscribed!")
@@ -19,26 +33,22 @@ example(of: "Challenge 1: Never") {
         })
         .subscribe(onNext: { element in
             print(element)
-        }, onCompleted: {
-            print("Completed")
-        }).disposed(by: DisposeBag())
+        }).dispose()
 }
 
-example(of: "Challenge 2: Never") {
+example(of: "Challenge 1c: Debug") {
     let observable = Observable<Any>.never()
     
     observable
-        .debug("Challenge 2 Debug", trimOutput: true)
+        .debug("Challenge 1c Debug", trimOutput: true)
         .subscribe(onNext: { element in
             print(element)
-        }, onCompleted: {
-            print("Completed")
-        }).disposed(by: DisposeBag())
+        }).dispose()
 }
 
 /*      CHALLENGE 2     */
 
-// Challenge 3a: Single
+// Challenge 2a: Single
 func loadText(from filename: String) -> Single<String> {
     
     enum FileReadError: Error {
@@ -69,14 +79,14 @@ func loadText(from filename: String) -> Single<String> {
     }
 }
 
-// Challenge 3b: Single
-example(of: "Challenge 3b") {
+// Challenge 2b: Single
+example(of: "Challenge 2b") {
     
     let disposeBag = DisposeBag()
     
-    loadText(from: "myTextFile").subscribe { single in
+    loadText(from: "myTextFile").subscribe { response in
         
-        switch single {
+        switch response {
         case .success(let string):
             print(string)
             

@@ -30,7 +30,7 @@
 		F442F22921E7A01B0039B867 /* Observables.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Observables.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F442F22A21E7A17C0039B867 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		F4E1984221ECA33D00815E67 /* ObservablesCheatSheet.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservablesCheatSheet.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		F4E1984321ECDECD00815E67 /* ObservableChallengesplayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservableChallengesplayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F4E1984321ECDECD00815E67 /* ObservableChallenges.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservableChallenges.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				F442F22921E7A01B0039B867 /* Observables.playground */,
-				F4E1984321ECDECD00815E67 /* ObservableChallengesplayground.playground */,
+				F4E1984321ECDECD00815E67 /* ObservableChallenges.playground */,
 				F4E1984221ECA33D00815E67 /* ObservablesCheatSheet.playground */,
 			);
 			path = Observables;

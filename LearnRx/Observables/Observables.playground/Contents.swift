@@ -9,13 +9,13 @@ import RxSwift
 /* RxSwift: What is it?
  
  In the words of Wikipedia, Reactive Programming is:
- Reactive programming is a programming paradigm oriented around data flows and the propagation of change. This means that it should be possible to express static or dynamic data flows with ease in the programming languages used, and that the underlying execution model will automatically propagate changes through the data flow
+ A programming paradigm oriented around data flows and the propagation of change. This means that it should be possible to express static or dynamic data flows with ease in the programming languages used, and that the underlying execution model will automatically propagate changes through the data flow
  
- Or in short; Reactive programming is the idea that we can easily create data flows and automatically react to their changes
+ Or in short; Reactive programming is the idea that we can easily create data flows and automatically react to their changes.
  
  RxSwift enables such behaviour using Observables, Subscriptions and Operators, all of which are covered in this project.
  
- `Observable Sequences` or `Observables`, are the data flows we use to emit data events. Everything else in Rx is based on or operates on these Observables. We use Subscriptions to receive and react to these data events and use Operators to perform logic on the data itself.
+ `Observable Sequences` or `Observables`, are the data flows we use to emit data events. Everything else in Rx is based on, or operates on these Observables. We use Subscriptions to receive and react to these data events and use Operators to perform logic on the data itself.
  
  For now though, lets have a look at Observables and Subscriptions.
  
@@ -28,24 +28,27 @@ import RxSwift
 
 /*
  Here are some examples of how we can initialise an Observable.
- Note that once an Observable is initialised with a value, we cannot add new values into its stream, that is covered in the next chapter `Subjects`.
+ 
+ Note that once an Observable is initialised with a value, we cannot add new values into its stream, that is covered later in the chapter `Subjects`.
  */
 
-example(of: "just, of, from") {
+example(of: "just, of, from, range") {
     let _ = Observable.just(1)
     let _ = Observable.of(1, 2, 3)
     let _ = Observable.of([1, 2, 3])
     let _ = Observable.from([1, 2, 3])
+    let _ = Observable.range(start: 1, count: 10)
     
     /*
-     Note how there is no output in the console here, this is because there is no subscriber listening for the events!
-     We cover subscribers in the function below
+     There is no output in the console here, this is because there is no subscriber listening for the events!
      */
 }
 
 /*
- As mentioned before, we use Subscribers to receive/react to events emitted by Observables.
- Below is a simple example of reacting to an emission via a print
+ As mentioned before, we use Subscribers to receive/react to Observable emissions.
+ 
+ .subscribe provides several handlers for reacting to an Observable. In the example we have only used (onNext:) to react to each emission.
+ There are more handlers covered in this project
  */
 
 example(of: "subscribe") {
@@ -71,7 +74,7 @@ example(of: "empty") {
     
     observable.subscribe(onNext: { element in
         print(element)
-    }, onCompleted: {
+    }, onCompleted: { // Note how we have added another handler here, this is called when the Observable Sequence completes
         print("Completed")
     })
 }
@@ -97,7 +100,7 @@ example(of: "never") {
 
 /*      CHALLENGE
 
-You should now be able to attempt challenge 1 in the `ObservableChallenges` playground located in this group folder.
+You should now be able to attempt Challenge 1a + 1b in the `ObservableChallenges` playground located in this group folder.
 You can refer back to the above examples if needed, bonus points if you don't have to!
  
         CHALLENGE       */
@@ -106,31 +109,11 @@ You can refer back to the above examples if needed, bonus points if you don't ha
 
 
 /*
- There are several initializers for Observables as we have seen above, there are some more covered below
- Most of these are self explanatory but are covered for clarity and reference
- */
-
-/*
- You can declare an observable with a range, this will give the observable a sequence using the values of the range i.e. 1 - 10
- This is the same as declaring an Observable using .of(1, 2, 3...)
- */
-
-example(of: "range") {
-    let observable = Observable.range(start: 1, count: 10)
-    
-    observable.subscribe(onNext: { i in
-        print(fibonacciNumber(from: i))
-    })
-}
-
-/*
- Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription keeps a strong reference to the Observable.
+ Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription keeps a strong reference to it.
  
- We need to dispose of these Subscriptions and Observables somehow
+ We need to dispose of these Subscriptions and Observables somehow to avoid memory leaks
  
  RxSwift has its own deallocation method: dispose() as shown below
- 
- This disposes of the Subscription immediately. If you were using a ViewController, you could keep this code in the ViewControllers deinit method to dispose the Subscriptions on navigating backwards
  */
 
 example(of: "dispose") { // Manually disposing
@@ -143,8 +126,8 @@ example(of: "dispose") { // Manually disposing
 }
 
 /*
- There is a more convenient way of handling the disposal of subscriptions, this is the Rx class `DisposeBag`
- DisposeBags track all of the Disposables that are added to them and disposes them when the DisposeBag is deinitialised
+ There is a more convenient way of handling the disposal of subscriptions; the Rx class `DisposeBag`
+ DisposeBags track all of the Disposables that are added to them and disposes of them when the DisposeBag is deinitialised
  */
 
 example(of: "DisposeBag") { // Automatically disposing
@@ -160,13 +143,13 @@ example(of: "DisposeBag") { // Automatically disposing
 }
 
 /*
- This does cause further potential for a retain cycle however; you must be careful not to use disposed(by:) when the Subscription has a strong reference to the Observables owner
+ This does cause further potential for a retain cycle however; you must be careful not to use strong reference to the Observables owner when using disposed(by:)
  
- In the ViewController scenario; the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription has a strong reference to the ViewController
+ In a ViewController scenario; the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription, in theory, could have a strong reference to the ViewController
  
- You can avoid this by using .dispose() or more simply using a weak reference within the Subscription
+ You can avoid this by manually using .dispose() or more simply using a weak reference within the Subscription
  
- Below are some examples of these scenarios
+ Below is an example of a retain cycle and its non retain-cycle counterpart
  */
 
 example(of: "DisposeBag retain cycle") {
@@ -200,7 +183,7 @@ example(of: "DisposeBag retain cycle") {
  
  This allows us to use a different Observable depending on a condition or a state, in the below example we are returning a different Observable depending on the state of the `flip` bool.
  
- This is useful in the scenario when you need to retrieve the Observable at a future point in time and at that point return a different Observable depending on a condition
+ This is useful in the scenario when you need to create the Observable at a future point in time
  */
 
 example(of: "deferred") {
@@ -259,13 +242,53 @@ example(of: "create") {
     }).disposed(by: disposeBag)
 }
 
-/* There are three kinds of traits in RxSwift: Single, Maybe, and Completable.
+/* There are three kinds of Observable traits in RxSwift: Completable, Single, and Maybe. */
+
+/* Completables
  
- Singles
- Singles will emit either a .success(value) or an .error event.
- The .success(value) is actually a combination of the .next and .completed events.
- This is useful for one-time processes that will either succeed and yield a value or fail, such as downloading data or loading it from disk.
+ A Completable will emit a .completed OR .error event.
+ You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
  */
+
+example(of: "Completable") {
+    
+    let disposeBag = DisposeBag()
+    
+    enum CompletableError: Error {
+        case anError
+    }
+    
+    let condition = true
+    
+    Completable.create { completable in
+        
+        if condition {
+            completable(.completed)
+        } else {
+            completable(.error(CompletableError.anError))
+        }
+        
+        return Disposables.create()
+        
+        }.subscribe { response in
+            
+            switch response {
+            case .completed:
+                print("Completed!")
+                
+            case .error(let error):
+                print(error)
+            }
+        }.disposed(by: disposeBag)
+}
+
+/* Singles
+ Singles will emit either a .success(value) or an .error event.
+ It functions in the same way as a Completable except it emits a value on its completion
+ 
+ The .success(value) is a combination of a .next and .completed event.
+ This is useful for one-time processes that will either succeed and yield a value or fail, such as downloading data or loading it from disk.
+*/
 
 example(of: "Single") {
     
@@ -299,48 +322,9 @@ example(of: "Single") {
     }.disposed(by: disposeBag)
 }
 
-/* Completables
- A Completable will only emit a .completed or .error event.
- It doesn't emit any value.
- You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
-*/
-
-example(of: "Completable") {
-    
-    let disposeBag = DisposeBag()
-    
-    enum CompletableError: Error {
-        case anError
-    }
-    
-    let condition = true
-    
-    Completable.create { completable in
-        
-        if condition {
-            completable(.completed)
-        } else {
-            completable(.error(CompletableError.anError))
-        }
-        
-        return Disposables.create()
-        
-    }.subscribe { response in
-        
-        switch response {
-        case .completed:
-            print("Completed!")
-            
-        case .error(let error):
-            print(error)
-        }
-    }.disposed(by: disposeBag)
-}
-
-/*
- Maybes
+/* Maybe
  Maybe is a combination of a Single and Completable, it can either emit a .success(value), .completed, or an .error.
- If you need to implement an operation that could either succeed or fail, and optionally return a value on success, then you should use Maybe.
+ If you need to implement an operation that could either succeed with a value, complete without a value or error then you should use Maybe.
  */
 
 example(of: "Maybe") {

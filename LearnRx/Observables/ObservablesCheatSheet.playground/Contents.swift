@@ -13,7 +13,9 @@ import RxSwift
  let observable = Observable.of(1, 2, 3)
  let observable = Observable.of([1, 2, 3])
  let observable = Observable.from([1, 2, 3])
+ let observable = Observable.range(start: 1, count: 10)
 */
+
 example(of: "Challenge 1a: Subscribe") {
     let observable = Observable.range(start: 1, count: 3)
 

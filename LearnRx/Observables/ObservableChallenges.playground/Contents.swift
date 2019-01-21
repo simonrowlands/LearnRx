@@ -21,12 +21,13 @@ example(of: "Challenge 1a: Subscribe") {
 
 /* Extended
  
- Once you have completed the challenge; for a look into how each of these Observable emission streams are created, try replacing the Observable with some of the following to see the console output. Note how two of them have identical outputs!
+ Once you have completed the challenge; for a look into how each of these Observable emission streams are created, try replacing the Observable with some of the following to see the console output. Note how three of them have identical outputs!
  
  let observable = Observable.just(1)
  let observable = Observable.of(1, 2, 3)
  let observable = Observable.of([1, 2, 3])
  let observable = Observable.from([1, 2, 3])
+ let observable = Observable.range(start: 1, count: 10)
  */
 
 
@@ -35,7 +36,7 @@ example(of: "Challenge 1a: Subscribe") {
 
 /*      CHALLENGE 1b: Do
  
- In the examples we only used a .subscribe(onNext:) operator but for this challenge you should attempt to use the .do(...) operator in addition to (and notably before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
+ In the examples we used the .subscribe(onNext:) operator but for this challenge you should attempt to use the .do(...) operator in addition to (and notably before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
  
  You should see that it provides side effects for events such as `onSubscribed`. Try adding the onSubscribed and onDispose handlers, in addition to a subscription to complete the challenge.
  

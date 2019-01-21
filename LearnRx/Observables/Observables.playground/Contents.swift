@@ -247,6 +247,7 @@ example(of: "create") {
 /* Completables
  
  A Completable will emit a .completed OR .error event.
+ 
  You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
  */
 
@@ -287,6 +288,7 @@ example(of: "Completable") {
  It functions in the same way as a Completable except it emits a value on its completion
  
  The .success(value) is a combination of a .next and .completed event.
+ 
  This is useful for one-time processes that will either succeed and yield a value or fail, such as downloading data or loading it from disk.
 */
 
@@ -324,6 +326,7 @@ example(of: "Single") {
 
 /* Maybe
  Maybe is a combination of a Single and Completable, it can either emit a .success(value), .completed, or an .error.
+ 
  If you need to implement an operation that could either succeed with a value, complete without a value or error then you should use Maybe.
  */
 

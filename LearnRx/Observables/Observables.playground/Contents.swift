@@ -143,7 +143,7 @@ example(of: "DisposeBag") { // Automatically disposing
 }
 
 /*
- This does cause further potential for a retain cycle however; you must be careful not to use strong reference to the Observables owner when using disposed(by:)
+ This does cause potential for a retain cycle however; you must be careful not to use strong reference to the Observables owner when using disposed(by:)
  
  In a ViewController scenario; the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription, in theory, could have a strong reference to the ViewController
  

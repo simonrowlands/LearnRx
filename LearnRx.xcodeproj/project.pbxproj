@@ -35,6 +35,8 @@
 		F4E1984221ECA33D00815E67 /* ObservablesCheatSheet.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservablesCheatSheet.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F4E1984321ECDECD00815E67 /* ObservablesChallenges.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ObservablesChallenges.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F4E1984521ECEF2E00815E67 /* Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Subjects.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F4F9E27521F5E9F500D50D02 /* OperatorsChallenges.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OperatorsChallenges.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		F4F9E27621F5FD0A00D50D02 /* OperatorsCheatSheet.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = OperatorsCheatSheet.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,8 @@
 			isa = PBXGroup;
 			children = (
 				F43910EF21EE10560080E3F2 /* Operators.playground */,
+				F4F9E27521F5E9F500D50D02 /* OperatorsChallenges.playground */,
+				F4F9E27621F5FD0A00D50D02 /* OperatorsCheatSheet.playground */,
 			);
 			path = Operators;
 			sourceTree = "<group>";

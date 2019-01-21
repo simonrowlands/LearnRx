@@ -530,3 +530,5 @@ example(of: "Delay") {
         delaySubscription.dispose()
     })
 }
+
+/*  To complete this chapter, attempt the challenges in the OperatorsChallenges playground located within this folder.  */

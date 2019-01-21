@@ -10,7 +10,7 @@ import RxSwift
  
  When you create an Observable it only emits an output. You can subscribe to an observables output, but you cannot alter it.
  
- A Subject is an Observable which can also take new inputs; meaning that you can manually emit new elements, rather than just monitoring the outputs.
+ A Subject is an Observable which can also take new inputs; meaning that you can manually emit new elements.
  
  Similar to Observables, Subjects have several traits available to them. These traits are:
  
@@ -20,7 +20,8 @@ import RxSwift
  
  // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here
  
- Subject traits differ in the way that they emit next events, they do not differ in the way they emit stop/completed events:
+ The Subject traits all emit stop/completed events in the same way, they differ however in the way that they emit next events
+ 
  All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be immediately notified that a subject has been terminated.
 */
 
@@ -29,9 +30,10 @@ import RxSwift
 
 /*      Publish Subject
  
- Publish Subjects only emit new next events to subscribers. It will not replay any previous next events.
- This is useful when you only want to receive live events and do not care about previous ones.
-
+ Publish Subjects only emit new values to subscribers. It will not replay any previously emitted values.
+ 
+ We create an Observable cast from the Subject to subscribe to
+ We emit new values on the subject itself
  */
 
 example(of: "Publish Subject") {
@@ -54,8 +56,8 @@ example(of: "Publish Subject") {
 
 /*      Behaviour Subject
  
- Behaviour Subjects differ to Publish Subjects in the way that they emit the last onNext event they received
- This means that a new subscriber will receive the last next event when it subscribes, in addition to any future events.
+ Behaviour Subjects differ to Publish Subjects in the way that they also emit the last value emitted
+ This means that a new subscriber will receive the last emission when it subscribes, in addition to any future values.
  
  */
 
@@ -78,8 +80,8 @@ example(of: "Behaviour Subject") {
 
 /*      Replay Subject
  
- Behaviour Subjects differ to Behaviour Subjects in the way that they emit the all previous onNext events up to their buffer size
- This means that a new subscriber will receive all of the previous events when it subscribes, up to the buffer limit, in addition to any future events.
+ Behaviour Subjects differ to Behaviour Subjects in the way that they emit the all previous emitted values up to their buffer size
+ This means that a new subscriber will receive all of the previous values when it subscribes, up to the buffer limit, in addition to any future values.
  
  */
 

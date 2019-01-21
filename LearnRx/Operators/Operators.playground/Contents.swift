@@ -7,7 +7,7 @@
 import RxSwift
 
 /*
- Now we have learnt about Observables and Subjects, the final section to look at is Operators!
+ Now we have learnt about Observables, Subscribers and Subjects, the final section to look at is Operators!
  
  Rx has many Operators available for use, they can be split into several categories:
  Transforming Operators
@@ -35,9 +35,6 @@ import RxSwift
  The Map Operator enumerates over each element in the observable list, performs a transformation and returns a new value.
  
  In the below example, the .map operator checks if the number is even, if it is, it multiplies it by -1.
- 
- Note:
- There must always be a return value for each element that is iterated upon
  */
 
 example(of: "Map") {
@@ -61,18 +58,18 @@ example(of: "Map") {
  
  The FlatMap operator transforms an Observable by applying a function that you specify to each item emitted by the source Observable, where that function returns an Observable that itself emits items. FlatMap then merges the emissions of these resulting Observables, emitting these merged results as its own sequence.
  
- At a simpler level; the .flatMap Operator creates a single Observable that emits all of the events from several other Observables.
+ At a simpler level; the .flatMap Operator creates a single Observable that emits all of the events from several other Observables which are themselves created from the values of a Source Observable.
  
  To explain the comparison between map and flatMap:
- Map uses the values from a stream and returns a new value of any type.
- FlatMap uses the values from a stream and returns an Observable of any type.. which we can then subscribe to.
+ - Map uses the values from a stream and returns new values of any type.
+ - FlatMap uses the values from a stream and returns an Observable of any type, which we can then subscribe to.
  */
 
 
 
 /*
  In this example, we have a function `doSomeRxLogic` that takes a number and returns an Observable with values created from that number.
- We want to apply `doSomeRxLogic` to each number within the numberList and subscribe to each event emitted.
+ We want to apply `doSomeRxLogic` to each value within the numberList and subscribe an Observable containing all of these values.
  
  To achieve this, we are using .flatMap to create an Observable that merges the emission events for each Observable returned from `doSomeRxLogic`.
  
@@ -89,7 +86,7 @@ example(of: "FlatMap") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
 
-    func doSomeRxLogic(on number: Int) -> Observable<Int> { // Emits two events
+    func doSomeRxLogic(on number: Int) -> Observable<Int> {
         return Observable.of(number * 10, number * 100)
     }
     
@@ -118,7 +115,7 @@ example(of: "FlatMap + Map") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
 
-    func doSomeRxLogic(on number: Int) -> Observable<Int> { // Emits two events
+    func doSomeRxLogic(on number: Int) -> Observable<Int> {
         return Observable.of(number * 10, number * 100)
     }
     
@@ -151,7 +148,7 @@ example(of: "Buffer") {
 }
 
 /*
- The Scan Operator applies a transformation the initial emission value and emits the new value. It then uses this new value in the next emission transformation
+ The Scan Operator applies a transformation to an initial value and emits the new value. It then uses this new value in the next  transformation
  
  Note:
  It requires a base value to use for the initial transformation
@@ -168,7 +165,7 @@ example(of: "Scan") {
             print($0)
         }).disposed(by: disposeBag)
     
-    print("\nFibonacci fun")
+    print("\nFibonacci")
     
     /*
      You can reasonably easily make a Fibonacci-esque scan by doing the following (It is missing the first two values, but you get the point)
@@ -252,7 +249,8 @@ example(of: "Skip") {
 }
 
 /*
- SkipWhile skips every element until the condition predicate fails. Once this occurs, every future element is emitted regardless of whether it passes the predicate.
+ SkipWhile skips every element until the condition predicate fails.
+ Once this occurs, every future element is emitted regardless of whether it fails the predicate.
  */
 
 example(of: "SkipWhile") {
@@ -316,18 +314,19 @@ example(of: "ElementAt") {
 
 /*
  Sometimes you may want to combine multiple Observables into a single Observable.
- There are several Operators that handle these situations, some merging the emissions together and some merging the emission streams.
+ There are several Operators that handle these situations, some grouping the emissions together and some merging the emission streams.
  
- Combine Latest combines the latest emissions from two or more emission streams (AKA Observable Outputs) into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2"
+ Combine Latest combines the latest emissions from two or more emission streams into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2"
  */
 
-example(of: "CombineLatest") { // Note how the number 1 is emitted twice here, this is because each emission causes a merge from the latest emission from each stream.
+example(of: "CombineLatest") {
     let disposeBag = DisposeBag()
     let stringList = Observable.of("A", "B")
     let numberList = Observable.range(start: 1, count: 3)
 
     Observable.combineLatest(stringList, numberList)
         .subscribe(onNext: { string, number in
+            // Note how the number 1 is printed twice here, this is because each emission causes a merge from the latest emission from each stream.
             print("\(string)\(number)")
         }).disposed(by: disposeBag)
 }
@@ -351,7 +350,8 @@ example(of: "Zip") {
 
 
 /*
- The Merge Operator merges multiple emission streams together.The emissions stay seperate from each other, unlike the above examples.
+ The Merge Operator merges multiple emission streams together.
+ The emissions stay separate from each other, unlike the above examples.
  
  Note:
  The emissions must be of the same value type, you cannot merge an <Int> and a <String> stream.
@@ -379,8 +379,8 @@ example(of: "Merge") {
  There are two error handling Operators; Catch and Retry.
  They are both designed to recover from a thrown error from within an emission stream and attempt to continue observing the emissions, or return a default value.
  
- Firstly we have an example of catchError that recreates the Observable and re-subscribes to the emission stream
- Secondly we have an example of catchErrorJustReturn that emits a default value if an error occurs
+ Firstly we have an example of catchError that upon erroring recreates the Observable and re-subscribes to its emission stream
+ Secondly we have an example of catchErrorJustReturn that upon erroring emits a default value
  */
 
 example(of: "CatchError") {
@@ -427,6 +427,7 @@ example(of: "CatchError") {
 
 /*
  Here we have an Observable that always fails on the first emission stream and then flips the condition to succeed.
+ 
  In the first example we can see that the retry() Operator repeatedly re-attempts the emission stream until it succeeds
  This could cause an infinite loop which is resolved by using the next examples; retry(maxAttempts) and/or using catchErrorJustReturn()
  */
@@ -501,14 +502,13 @@ example(of: "Retry") {
 
 /*
  There are several time based operators/subscriptions in Rx
- It is difficult to create examples of async operators in playground, therefore there is only one example here.
- 
- DelaySubscription needs a 'hot' Observable (one that emits values regardless of having a subscriber or not) to fully display its usage.
+ It is difficult to create several examples of async operators in playground, therefore there is only one example here.
  
  Delay delays the emissions of an Observable, meaning that the initial value will not be fired until after the specified amount of time
  
  DelaySubscription delays the point that the subcription starts receiving values.
- 
+ It needs a 'hot' Observable (one that emits values regardless of having a subscriber or not) to fully display its usage.
+
  In theory this would mean that Delay would receive all values i.e. 1, 2, 3, 4 but delayed by (x) amount of time
  DelaySubscription may not receieve all values i.e. 3, 4 depending on the delay
  */

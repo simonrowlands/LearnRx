@@ -31,15 +31,11 @@ example(of: "Challenge 1: Publish Subject") {
  
  For this challenge you should create a ReplaySubject<Int> using .create with a bufferSize of 2
  Create an observable from the subject
- Call onNext(value) on the subject with value one, two and three (Before you subscribe)
+ Call onNext(value) on the subject with values 1, 2 and 3 (Before you subscribe)
  Subscribe to the Observable
  
  To complete this challenge - Upon subscribing to the observable, have 2, 3 printed in console
  */
-
-let one = 1
-let two = 2
-let three = 3
 
 example(of: "Challenge 2: Replay Subject") {
     

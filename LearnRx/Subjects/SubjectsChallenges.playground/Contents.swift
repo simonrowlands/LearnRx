@@ -16,7 +16,7 @@ import RxSwift
 /* Challenge 1: Publish Subject
  
  Create a Publish Subject
- Create an Observable cast from the subject, this Observable should have some values to emit
+ Create an Observable from the subject, this Observable should have some values to emit
  Subscribe to the Observable
  Call onNext(value) on the subject to emit a new value
  
@@ -30,7 +30,7 @@ example(of: "Challenge 1: Publish Subject") {
 /* Challenge 2: Replay Subject
  
  For this challenge you should create a ReplaySubject<Int> using .create with a bufferSize of 2
- Create an observable cast from the subject
+ Create an observable from the subject
  Call onNext(value) on the subject with value one, two and three (Before you subscribe)
  Subscribe to the Observable
  

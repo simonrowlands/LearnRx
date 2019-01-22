@@ -73,7 +73,7 @@ example(of: "Challenge 1c: Debug") {
 
 
 /*      CHALLENGE 2a: Single
-
+ 
  A good example to use is a function that loads text from a file, this may succeed with a value or fail with an error and so it is well suited to a Single.
  
  Within this function it should return a single(.error) in one or more conditions or return a single(.success) on a successful read.

@@ -11,7 +11,7 @@ import RxSwift
 example(of: "Challenge 1: Publish Subject") {
     let disposeBag = DisposeBag()
     let subject = PublishSubject<String>()
-    let observable: Observable<String> = subject
+    let observable: Observable<String> = subject.asObservable()
     
     subject.onNext("Number one")
     
@@ -24,18 +24,14 @@ example(of: "Challenge 1: Publish Subject") {
 
 /* Challenge 2: Replay Subject */
 
-let one = 1
-let two = 2
-let three = 3
-
 example(of: "Challenge 2: Replay Subject") {
     let disposeBag = DisposeBag()
     let subject = ReplaySubject<Int>.create(bufferSize: 2)
-    let observable: Observable<Int> = subject
+    let observable: Observable<Int> = subject.asObservable()
     
-    subject.onNext(one)
-    subject.onNext(two)
-    subject.onNext(three)
+    subject.onNext(1)
+    subject.onNext(2)
+    subject.onNext(3)
     
     observable.subscribe(onNext: { text in
         print(text)

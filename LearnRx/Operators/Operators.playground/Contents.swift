@@ -10,11 +10,11 @@ import RxSwift
  Now we have learnt about Observables, Subscribers and Subjects, the final section to look at is Operators!
  
  Rx has many Operators available for use, they can be split into several categories:
- Transforming Operators
- Filtering Operators
- Combining Operators
- Error Handling Operators
- Time Based Operators
+ - Transforming Operators
+ - Filtering Operators
+ - Combining Operators
+ - Error Handling Operators
+ - Time Based Operators
  
  Operators are fundamental to Rx, they enable you to react to events emitted by Observables. They can be even be chained together to form more complex processes.
  
@@ -85,7 +85,7 @@ example(of: "Map") {
 example(of: "FlatMap") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     func doSomeRxLogic(on number: Int) -> Observable<Int> {
         return Observable.of(number * 10, number * 100)
     }
@@ -104,17 +104,17 @@ example(of: "FlatMap") {
 
 
 /*
- As mentioned earlier, you can combine different operators together
- The "FlatMap" example has been duplicated and combined with a .map operation
+ As mentioned earlier, you can combine different operators together.
+ The "FlatMap" example has been duplicated and combined with a .map operation.
  
  Note:
- The map operation is applied to each element emitted from the final Observable
+ The map operation is applied to each element emitted from the final Observable.
  */
 
 example(of: "FlatMap + Map") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     func doSomeRxLogic(on number: Int) -> Observable<Int> {
         return Observable.of(number * 10, number * 100)
     }
@@ -131,15 +131,15 @@ example(of: "FlatMap + Map") {
 
 /*
  The Buffer Operator groups emissions together.
- You can group emissions by time i.e. group emissions every 5 seconds
- You can group emissions by count i.e. group every 3 emissions
- You can group using a combination of the above
+ You can group emissions by time i.e. group emissions every 5 seconds.
+ You can group emissions by count i.e. group every 3 emissions.
+ You can group using a combination of the above.
  */
 
 example(of: "Buffer") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     numberList
         .buffer(timeSpan: 5, count: 3, scheduler: MainScheduler.instance)
         .subscribe(onNext: {
@@ -148,10 +148,10 @@ example(of: "Buffer") {
 }
 
 /*
- The Scan Operator applies a transformation to an initial value and emits the new value. It then uses this new value in the next  transformation
+ The Scan Operator applies a transformation to an initial value and emits the new value. It then uses this new value in the next  transformation.
  
  Note:
- It requires a base value to use for the initial transformation
+ It requires a base value to use for the initial transformation.
  */
 
 example(of: "Scan") {
@@ -200,7 +200,7 @@ example(of: "Scan") {
 example(of: "Filter") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 10)
-
+    
     numberList
         .filter({ $0 % 2 == 0 })
         .subscribe(onNext: { element in
@@ -229,18 +229,18 @@ example(of: "Distinct Until Changed") {
 
 
 /*
- Below are a few examples of some of the self-explanatory simpler Operators
+ Below are a few examples of some of the self-explanatory simpler Operators:
  Namely: Skip, Take, ElementAt
  */
 
 /*
- Skip skips the first (n) number of emissions
+ Skip skips the first (n) number of emissions.
  */
 
 example(of: "Skip") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 10)
-
+    
     numberList
         .skip(5)
         .subscribe(onNext: {
@@ -267,14 +267,14 @@ example(of: "SkipWhile") {
 }
 
 /*
- Take takes the first (n) number of elements
- TakeLast takes the last (n) number of elements
+ Take takes the first (n) number of elements.
+ TakeLast takes the last (n) number of elements.
  */
 
 example(of: "Take") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     numberList
         .take(2)
         .subscribe(onNext: {
@@ -291,13 +291,13 @@ example(of: "Take") {
 }
 
 /*
- ElementAt take the element at the specified index in the stream
+ ElementAt take the element at the specified index in the stream.
  */
 
 example(of: "ElementAt") {
     let disposeBag = DisposeBag()
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     numberList
         .elementAt(0)
         .subscribe(onNext: {
@@ -316,14 +316,14 @@ example(of: "ElementAt") {
  Sometimes you may want to combine multiple Observables into a single Observable.
  There are several Operators that handle these situations, some grouping the emissions together and some merging the emission streams.
  
- Combine Latest combines the latest emissions from two or more emission streams into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2"
+ Combine Latest combines the latest emissions from two or more emission streams into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2".
  */
 
 example(of: "CombineLatest") {
     let disposeBag = DisposeBag()
     let stringList = Observable.of("A", "B")
     let numberList = Observable.range(start: 1, count: 3)
-
+    
     Observable.combineLatest(stringList, numberList)
         .subscribe(onNext: { string, number in
             // Note how the number 1 is printed twice here, this is because each emission causes a merge from the latest emission from each stream.
@@ -341,7 +341,7 @@ example(of: "Zip") {
     let disposeBag = DisposeBag()
     let stringList = Observable.of("A", "B")
     let numberList = Observable.range(start: 1, count: 5)
-
+    
     Observable.zip(stringList, numberList)
         .subscribe(onNext: { string, number in
             print("\(string)\(number)")
@@ -380,7 +380,7 @@ example(of: "Merge") {
  They are both designed to recover from a thrown error from within an emission stream and attempt to continue observing the emissions, or return a default value.
  
  Firstly we have an example of catchError that upon erroring recreates the Observable and re-subscribes to its emission stream
- Secondly we have an example of catchErrorJustReturn that upon erroring emits a default value
+ Secondly we have an example of catchErrorJustReturn that upon erroring emits a default value.
  */
 
 example(of: "CatchError") {
@@ -428,13 +428,13 @@ example(of: "CatchError") {
 /*
  Here we have an Observable that always fails on the first emission stream and then flips the condition to succeed.
  
- In the first example we can see that the retry() Operator repeatedly re-attempts the emission stream until it succeeds
- This could cause an infinite loop which is resolved by using the next examples; retry(maxAttempts) and/or using catchErrorJustReturn()
+ In the first example we can see that the retry() Operator repeatedly re-attempts the emission stream until it succeeds.
+ This could cause an infinite loop which is resolved by using the next examples; retry(maxAttempts) and/or using catchErrorJustReturn().
  */
 
 example(of: "Retry") {
     let disposeBag = DisposeBag()
-
+    
     enum MyError: Error {
         case error
     }
@@ -457,7 +457,7 @@ example(of: "Retry") {
     }
     
     numberObservable
-        .retry() // Be very careful here; if this never succesfully retries it will loop infinitely.
+        .retry() // Be very careful here; if this never succesfully retries it will loop infinitely
         .subscribe(onNext: {
             print($0)
         }).disposed(by: disposeBag)
@@ -504,11 +504,11 @@ example(of: "Retry") {
  There are several time based operators/subscriptions in Rx
  It is difficult to create several examples of async operators in playground, therefore there is only one example here.
  
- Delay delays the emissions of an Observable, meaning that the initial value will not be fired until after the specified amount of time
+ Delay delays the emissions of an Observable, meaning that the initial value will not be fired until after the specified amount of time.
  
  DelaySubscription delays the point that the subcription starts receiving values.
  It needs a 'hot' Observable (one that emits values regardless of having a subscriber or not) to fully display its usage.
-
+ 
  In theory this would mean that Delay would receive all values i.e. 1, 2, 3, 4 but delayed by (x) amount of time
  DelaySubscription may not receieve all values i.e. 3, 4 depending on the delay
  */

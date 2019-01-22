@@ -14,11 +14,11 @@ import RxSwift
  let observable = Observable.of([1, 2, 3])
  let observable = Observable.from([1, 2, 3])
  let observable = Observable.range(start: 1, count: 10)
-*/
+ */
 
 example(of: "Challenge 1a: Subscribe") {
     let observable = Observable.range(start: 1, count: 3)
-
+    
     observable.subscribe(onNext: { element in
         print(element)
     }).dispose()
@@ -26,7 +26,7 @@ example(of: "Challenge 1a: Subscribe") {
 
 example(of: "Challenge 1b: Do") {
     let observable = Observable.range(start: 1, count: 3)
-
+    
     observable
         .do(onSubscribed: {
             print("Subscribed!")
@@ -95,5 +95,5 @@ example(of: "Challenge 2b") {
         case .error(let error):
             print(error)
         }
-    }.disposed(by: disposeBag)
+        }.disposed(by: disposeBag)
 }

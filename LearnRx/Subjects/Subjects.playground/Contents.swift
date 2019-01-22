@@ -18,12 +18,12 @@ import RxSwift
  Replay Subject
  Behaviour Subject
  
- // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here
+ // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here.
  
- The Subject traits all emit stop/completed events in the same way, they differ however in the way that they emit next events
+ The Subject traits all emit stop/completed events in the same way, they differ however in the way that they emit next events.
  
  All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be immediately notified that a subject has been terminated.
-*/
+ */
 
 
 
@@ -41,8 +41,8 @@ example(of: "Publish Subject") {
     
     let subject = PublishSubject<String>()
     
-    // You can cast the subject as it inherits from Observable
-    let observable: Observable<String> = subject
+    // You can transform the Subject to Observable
+    let observable: Observable<String> = subject.asObservable()
     
     subject.onNext("Number one") // This value is added to the emission stream despite there being no subscriber
     
@@ -56,7 +56,7 @@ example(of: "Publish Subject") {
 
 /*      Behaviour Subject
  
- Behaviour Subjects differ to Publish Subjects in the way that they also emit the last value emitted
+ Behaviour Subjects differ to Publish Subjects in the way that they also emit the last value emitted.
  This means that a new subscriber will receive the last emission when it subscribes, in addition to any future values.
  
  */
@@ -65,7 +65,7 @@ example(of: "Behaviour Subject") {
     let disposeBag = DisposeBag()
     
     let subject = BehaviorSubject<String>(value: "Number zero") // Note how it must be initialised with a value
-    let observable: Observable<String> = subject
+    let observable: Observable<String> = subject.asObservable()
     
     subject.onNext("Number one")
     subject.onNext("Number two")
@@ -80,7 +80,7 @@ example(of: "Behaviour Subject") {
 
 /*      Replay Subject
  
- Behaviour Subjects differ to Behaviour Subjects in the way that they emit the all previous emitted values up to their buffer size
+ Behaviour Subjects differ to Behaviour Subjects in the way that they emit the all previous emitted values up to their buffer size.
  This means that a new subscriber will receive all of the previous values when it subscribes, up to the buffer limit, in addition to any future values.
  
  */
@@ -90,7 +90,7 @@ example(of: "Replay Subject") {
     let disposeBag = DisposeBag()
     
     let subject = ReplaySubject<String>.create(bufferSize: 3)
-    let observable: Observable<String> = subject
+    let observable: Observable<String> = subject.asObservable()
     
     subject.onNext("Number one")
     subject.onNext("Number two")

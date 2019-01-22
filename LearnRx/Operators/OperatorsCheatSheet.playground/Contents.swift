@@ -14,9 +14,9 @@ example(of: "Challenge 1: Map") {
     
     observable.map {
         $0 * 10
-    }.subscribe(onNext: {
-        print($0)
-    }).disposed(by: disposeBag)
+        }.subscribe(onNext: { number in
+            print(number)
+        }).disposed(by: disposeBag)
 }
 
 /*  Challenge 2: FlatMap  */
@@ -28,11 +28,11 @@ example(of: "Challenge 2: FlatMap") {
     let observable = Observable.range(start: 1, count: 5)
     let disposeBag = DisposeBag()
     
-    observable.flatMap {
-        square(value: $0)
-    }.subscribe(onNext: {
-        print($0)
-    }).disposed(by: disposeBag)
+    observable.flatMap { number in
+        square(value: number)
+        }.subscribe(onNext: { number in
+            print(number)
+        }).disposed(by: disposeBag)
 }
 
 
@@ -42,9 +42,9 @@ example(of: "Challenge 3: Filter") {
     let observable = Observable.of("Steve", "Simon", "Dave", "Bob", "sam", "Joe", "James")
     let disposeBag = DisposeBag()
     
-    observable.filter {
-        $0.lowercased().first == "s"
-    }.subscribe(onNext: {
-        print($0)
-    }).disposed(by: disposeBag)
+    observable.filter { name in
+        name.lowercased().first == "s"
+        }.subscribe(onNext: { name in
+            print(name)
+        }).disposed(by: disposeBag)
 }

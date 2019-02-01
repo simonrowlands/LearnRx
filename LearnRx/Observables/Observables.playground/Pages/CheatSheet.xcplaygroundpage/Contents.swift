@@ -6,7 +6,7 @@
 
 import RxSwift
 
-/*      CHALLENGE CHEAT SHEET      */
+//: ## CHALLENGE CHEAT SHEET
 
 /*
  let observable = Observable.just(1)
@@ -48,9 +48,8 @@ example(of: "Challenge 1c: Debug") {
         }).dispose()
 }
 
-/*      CHALLENGE 2     */
+//: ### CHALLENGE 2a: Single
 
-// Challenge 2a: Single
 func loadText(from filename: String) -> Single<String> {
     
     enum FileReadError: Error {
@@ -81,7 +80,7 @@ func loadText(from filename: String) -> Single<String> {
     }
 }
 
-// Challenge 2b: Single
+//: ### Challenge 2b: Single
 example(of: "Challenge 2b") {
     
     let disposeBag = DisposeBag()
@@ -95,5 +94,5 @@ example(of: "Challenge 2b") {
         case .error(let error):
             print(error)
         }
-        }.disposed(by: disposeBag)
+    }.disposed(by: disposeBag)
 }

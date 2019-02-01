@@ -6,7 +6,9 @@
 
 import RxSwift
 
-/* Challenge 1: Publish Subject */
+//: ## CHALLENGE CHEAT SHEET
+
+//: ### Challenge 1: Publish Subject
 
 example(of: "Challenge 1: Publish Subject") {
     let disposeBag = DisposeBag()
@@ -22,7 +24,7 @@ example(of: "Challenge 1: Publish Subject") {
     subject.onNext("Number two")
 }
 
-/* Challenge 2: Replay Subject */
+//: ### Challenge 2: Replay Subject
 
 example(of: "Challenge 2: Replay Subject") {
     let disposeBag = DisposeBag()

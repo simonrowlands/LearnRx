@@ -6,14 +6,20 @@
 
 import RxSwift
 
-/*
+/*:
+ * [Back to the Subjects page](@previous)
+ * [Go to the Cheat Sheet](@next)
+ */
+
+/*:
+ ## Challenges
  For all these challenges, when using an Observable/Subscription you should always do the following:
  - Subscribe to the Observable
  - Add the Subscription to a DisposeBag
  */
 
-
-/* Challenge 1: Publish Subject
+/*:
+ ### Challenge 1: Publish Subject
  
  Create a Publish Subject
  Create an Observable from the subject, this Observable should have some values to emit
@@ -27,7 +33,8 @@ example(of: "Challenge 1: Publish Subject") {
     
 }
 
-/* Challenge 2: Replay Subject
+/*:
+ ### Challenge 2: Replay Subject
  
  For this challenge you should create a ReplaySubject<Int> using .create with a bufferSize of 2
  Create an observable from the subject
@@ -40,3 +47,9 @@ example(of: "Challenge 1: Publish Subject") {
 example(of: "Challenge 2: Replay Subject") {
     
 }
+
+/*:
+ [The answers are available here](@next)
+ 
+ You can now move on to the Operators chapter!
+ */

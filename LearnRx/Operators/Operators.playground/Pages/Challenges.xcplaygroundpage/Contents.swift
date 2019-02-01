@@ -6,14 +6,20 @@
 
 import RxSwift
 
-/*
+/*:
+ * [Back to the Observables page](@previous)
+ * [Go to the Cheat Sheet](@next)
+ */
+
+/*:
+ ## Challenges
  For all these challenges, when using an Observable/Subscription you should always do the following:
  - Subscribe to the Observable
  - Add the Subscription to a DisposeBag
  */
 
-
-/* Challenge 1: Map
+/*:
+ ### Challenge 1: Map
  
  Using map, transform the values of the Observable in any way
  
@@ -26,7 +32,8 @@ example(of: "Challenge 1: Map") {
     
 }
 
-/* Challenge 2: FlatMap
+/*:
+ ### Challenge 2: FlatMap
  
  Using flatMap, transform the values of the Observable using the `square(value:)` function
  
@@ -34,7 +41,6 @@ example(of: "Challenge 1: Map") {
  - Print the new values from within the subscription
  */
 
-/*  FlatMap Challenge  */
 func square(value: Int) -> Observable<Int> {
     return Observable.of(value * value)
 }
@@ -44,7 +50,8 @@ example(of: "Challenge 2: FlatMap") {
     
 }
 
-/* Challenge 3: Filter
+/*:
+ ### Challenge 3: Filter
  
  Using filter, remove all values that do not begin with the letter 'S'
  
@@ -57,3 +64,9 @@ example(of: "Challenge 3: Filter") {
     let _ = Observable.of("Steve", "Simon", "Dave", "Bob", "Sam", "Joe", "James")
     
 }
+
+/*:
+ [The answers are available here](@next)
+ 
+ You have now completed all of the chapters, congratulations!
+ */

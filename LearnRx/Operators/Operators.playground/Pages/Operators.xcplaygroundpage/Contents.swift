@@ -6,8 +6,10 @@
 
 import RxSwift
 
-/*
- Now we have learnt about Observables, Subscribers and Subjects, the final section to look at is Operators!
+/*:
+ ## Operators
+ 
+ Now we have learnt about Observables, Subscribers and Subjects, the final section to look at is `Operators`!
  
  Rx has many Operators available for use, they can be split into several categories:
  - Transforming Operators
@@ -20,18 +22,16 @@ import RxSwift
  
  We will look at examples of most of the Operators, you do not have to know all of these Operators of the top of your head, however, this playground has been created as a point of reference in the event that you need to lookup a specific one with an example.
  
- If you would like to see these Operators in diagram form, here is a great site for visualisation: http://rxmarbles.com
- If you would like the full list of Operators, here they are directly from the Rx documentation http://reactivex.io/documentation/operators.html
+ If you would like to see these Operators in diagram form, here is a great site for visualisation: [RxMarbles](http://rxmarbles.com)
+ 
+ If you would like the full list of Operators, here they are directly from the Rx documentation: [RxDocs](http://reactivex.io/documentation/operators.html)
  */
 
 
-
-
-/*      TRANSFORMING OPERATORS      */
-
-
-
-/*
+/*:
+ ## TRANSFORMING OPERATORS
+ 
+ ### Map
  The Map Operator enumerates over each element in the observable list, performs a transformation and returns a new value.
  
  In the below example, the .map operator checks if the number is even, if it is, it multiplies it by -1.
@@ -53,8 +53,10 @@ example(of: "Map") {
 }
 
 
-/*
- The FlatMap Operator explanation from the Rx documentation (http://reactivex.io/documentation/operators/flatmap.html) is as follows:
+/*:
+ ### FlatMap
+ 
+ The `FlatMap` Operator explanation from the Rx documentation (http://reactivex.io/documentation/operators/flatmap.html) is as follows:
  
  The FlatMap operator transforms an Observable by applying a function that you specify to each item emitted by the source Observable, where that function returns an Observable that itself emits items. FlatMap then merges the emissions of these resulting Observables, emitting these merged results as its own sequence.
  
@@ -67,7 +69,7 @@ example(of: "Map") {
 
 
 
-/*
+/*:
  In this example, we have a function `doSomeRxLogic` that takes a number and returns an Observable with values created from that number.
  We want to apply `doSomeRxLogic` to each value within the numberList and subscribe an Observable containing all of these values.
  
@@ -77,8 +79,11 @@ example(of: "Map") {
  As the returned Observable is a merge of the other Observables, their emissions may interlap.
  
  Meaning that if you merge an Observable with events `A` and an Observable with events `B`, you may not receive a merged emission of:
+ 
  AAABBB
+ 
  but more likely something like:
+ 
  AABABB
  */
 
@@ -103,8 +108,9 @@ example(of: "FlatMap") {
 }
 
 
-/*
+/*:
  As mentioned earlier, you can combine different operators together.
+ 
  The "FlatMap" example has been duplicated and combined with a .map operation.
  
  Note:
@@ -129,10 +135,15 @@ example(of: "FlatMap + Map") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### Buffer
+ 
  The Buffer Operator groups emissions together.
+ 
  You can group emissions by time i.e. group emissions every 5 seconds.
+ 
  You can group emissions by count i.e. group every 3 emissions.
+ 
  You can group using a combination of the above.
  */
 
@@ -147,7 +158,9 @@ example(of: "Buffer") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### Scan
+ 
  The Scan Operator applies a transformation to an initial value and emits the new value. It then uses this new value in the next  transformation.
  
  Note:
@@ -186,14 +199,15 @@ example(of: "Scan") {
 
 
 
-/*      FILTERING OPERATORS     */
-
-
-
-/*
+/*:
+ ## FILTERING OPERATORS
+ 
+ ### Filter
+ 
  If you are familiar with Swifts filter operator, you should be able to understand how the Rx filter operator works.
  
  For the uninitiated: Filter ignores any values from a sequence that do not match a given predicate.
+ 
  In Rx's case it works the same way; next events are only emitted on the remaining values.
  */
 
@@ -209,8 +223,11 @@ example(of: "Filter") {
 }
 
 
-/*
+/*:
+ ### Distinct Until Changed
+ 
  In some cases an Observable may emit a value that is identical to the last value.
+ 
  In the event that you only require unique emission values you can use the Distinct Operator.
  
  An example of this would be monitoring Bool emissions and you only want to know when it flips its state.
@@ -228,14 +245,17 @@ example(of: "Distinct Until Changed") {
 }
 
 
-/*
+/*:
  Below are a few examples of some of the self-explanatory simpler Operators:
+ 
  Namely: Skip, Take, ElementAt
  */
 
-/*
+/*:
+ ### Skip
+ 
  Skip skips the first (n) number of emissions.
- */
+*/
 
 example(of: "Skip") {
     let disposeBag = DisposeBag()
@@ -248,8 +268,11 @@ example(of: "Skip") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### SkipWhile
+ 
  SkipWhile skips every element until the condition predicate fails.
+ 
  Once this occurs, every future element is emitted regardless of whether it fails the predicate.
  */
 
@@ -266,8 +289,11 @@ example(of: "SkipWhile") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### Take
+ 
  Take takes the first (n) number of elements.
+ 
  TakeLast takes the last (n) number of elements.
  */
 
@@ -290,7 +316,9 @@ example(of: "Take") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### ElementAt
+ 
  ElementAt take the element at the specified index in the stream.
  */
 
@@ -308,13 +336,14 @@ example(of: "ElementAt") {
 
 
 
-/*      COMBINING OPERATORS      */
-
-
-
-/*
+/*:
+ ## COMBINING OPERATORS
+ 
  Sometimes you may want to combine multiple Observables into a single Observable.
+ 
  There are several Operators that handle these situations, some grouping the emissions together and some merging the emission streams.
+ 
+ ### CombineLatest
  
  Combine Latest combines the latest emissions from two or more emission streams into a single emission, resulting in what normally may be emitted as "A" and "1, 2" into "A1, A2".
  */
@@ -332,8 +361,10 @@ example(of: "CombineLatest") {
 }
 
 
-/*
+/*:
+ ### Zip
  The Zip Operator merges the emissions from multiple streams together for each corresponding index.
+ 
  In the below example, you can see that there are only two emissions despite there being 5 items in the numberList emission stream.
  */
 
@@ -349,8 +380,11 @@ example(of: "Zip") {
 }
 
 
-/*
+/*:
+ ### Merge
+ 
  The Merge Operator merges multiple emission streams together.
+ 
  The emissions stay separate from each other, unlike the above examples.
  
  Note:
@@ -371,16 +405,18 @@ example(of: "Merge") {
 
 
 
-/*      ERROR HANDLING OPERATORS        */
-
-
-
-/*
+/*:
+ ## ERROR HANDLING OPERATORS
+ 
  There are two error handling Operators; Catch and Retry.
+ 
  They are both designed to recover from a thrown error from within an emission stream and attempt to continue observing the emissions, or return a default value.
  
  Firstly we have an example of catchError that upon erroring recreates the Observable and re-subscribes to its emission stream
+ 
  Secondly we have an example of catchErrorJustReturn that upon erroring emits a default value.
+ 
+ ### CatchError
  */
 
 example(of: "CatchError") {
@@ -425,10 +461,13 @@ example(of: "CatchError") {
         }).disposed(by: disposeBag)
 }
 
-/*
+/*:
+ ### Retry
+ 
  Here we have an Observable that always fails on the first emission stream and then flips the condition to succeed.
  
  In the first example we can see that the retry() Operator repeatedly re-attempts the emission stream until it succeeds.
+ 
  This could cause an infinite loop which is resolved by using the next examples; retry(maxAttempts) and/or using catchErrorJustReturn().
  */
 
@@ -496,11 +535,10 @@ example(of: "Retry") {
 
 
 
-/*      TIME-BASED OPERATORS        */
+/*:
+ ## TIME-BASED OPERATORS
+ ### Delay
 
-
-
-/*
  There are several time based operators/subscriptions in Rx
  It is difficult to create several examples of async operators in playground, therefore there is only one example here.
  
@@ -511,6 +549,7 @@ example(of: "Retry") {
  
  In theory this would mean that Delay would receive all values i.e. 1, 2, 3, 4 but delayed by (x) amount of time
  DelaySubscription may not receieve all values i.e. 3, 4 depending on the delay
+ 
  */
 
 example(of: "Delay") {
@@ -531,4 +570,17 @@ example(of: "Delay") {
     })
 }
 
-/*  To complete this chapter, attempt the challenges in the OperatorsChallenges playground located within this folder.  */
+/*:
+ To complete this chapter, attempt the challenges in the Challenges playground located within this folder.
+ */
+/*:
+ - - -
+ ### CHALLENGE
+ 
+ To finish off the Operators chapter you should now be able to attempt the challenges.
+ 
+ You can refer back to the above examples if needed, as always bonus points if you don't have to!
+ 
+ [Link to the Challenges](@next)
+ - - -
+ */

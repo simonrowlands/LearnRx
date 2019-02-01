@@ -9,9 +9,11 @@ import RxSwift
 /*:
  * [Back to the Observables page](@previous)
  * [Go to the Cheat Sheet](@next)
+ * [Go to the next chapter - Subjects](Subjects)
  */
 
 /*:
+ ## Challenges
  ### Challenge 1a: Subscribe
  
  In this first challenge, you should attempt to subscribe to the below Observable using the onNext: handler.
@@ -129,5 +131,5 @@ example(of: "Challenge 2b") {
 /*:
  [The answers are available here](@next)
  
- You can now move on to the Subjects chapter!
+ You can now move on to the [Subjects chapter](Subjects)!
  */

@@ -7,7 +7,7 @@
 import RxSwift
 
 /*:
- * [Back to the Observables page](@previous)
+ * [Back to the Operators page](@previous)
  * [Go to the Cheat Sheet](@next)
  */
 

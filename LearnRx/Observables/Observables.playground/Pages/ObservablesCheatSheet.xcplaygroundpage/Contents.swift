@@ -6,6 +6,12 @@
 
 import RxSwift
 
+/*:
+ * [Go to the Observables page](Observables)
+ * [Go to the Challenges](ObservablesChallenges)
+ * [Go to the next chapter - Subjects](Subjects)
+ */
+
 //: ## CHALLENGE CHEAT SHEET
 
 /*
@@ -16,6 +22,8 @@ import RxSwift
  let observable = Observable.range(start: 1, count: 10)
  */
 
+//: ### Challenge 1a: Subscribe
+
 example(of: "Challenge 1a: Subscribe") {
     let observable = Observable.range(start: 1, count: 3)
     
@@ -23,6 +31,8 @@ example(of: "Challenge 1a: Subscribe") {
         print(element)
     }).dispose()
 }
+
+//: ### Challenge 1b: Do
 
 example(of: "Challenge 1b: Do") {
     let observable = Observable.range(start: 1, count: 3)
@@ -37,6 +47,8 @@ example(of: "Challenge 1b: Do") {
             print(element)
         }).dispose()
 }
+
+//: ### Challenge 1c: Debug
 
 example(of: "Challenge 1c: Debug") {
     let observable = Observable<Any>.never()

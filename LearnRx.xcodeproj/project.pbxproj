@@ -20,7 +20,6 @@
 		48EB21DCB20CEF0830AA8853 /* Pods_LearnRx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LearnRx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CDCA0485021AC5EC93C6CA6 /* Pods-LearnRx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LearnRx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LearnRx/Pods-LearnRx.debug.xcconfig"; sourceTree = "<group>"; };
 		92FF0C91A97340AB8217E035 /* Pods-LearnRx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LearnRx.release.xcconfig"; path = "Pods/Target Support Files/Pods-LearnRx/Pods-LearnRx.release.xcconfig"; sourceTree = "<group>"; };
-		F43910EF21EE10560080E3F2 /* Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Operators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F442F21421E79FE00039B867 /* LearnRx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnRx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F442F21721E79FE00039B867 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F442F21921E79FE00039B867 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -30,7 +29,6 @@
 		F442F22321E79FE10039B867 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F442F22921E7A01B0039B867 /* Observables.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Observables.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F442F22A21E7A17C0039B867 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		F4E1984521ECEF2E00815E67 /* Subjects.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Subjects.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,14 +60,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F43910EE21EE103D0080E3F2 /* Operators */ = {
-			isa = PBXGroup;
-			children = (
-				F43910EF21EE10560080E3F2 /* Operators.playground */,
-			);
-			path = Operators;
-			sourceTree = "<group>";
-		};
 		F442F20B21E79FE00039B867 = {
 			isa = PBXGroup;
 			children = (
@@ -93,8 +83,6 @@
 			children = (
 				F442F22A21E7A17C0039B867 /* README.txt */,
 				F4E1984121ECA31300815E67 /* Observables */,
-				F4E1984421ECEF0A00815E67 /* Subjects */,
-				F43910EE21EE103D0080E3F2 /* Operators */,
 				F442F21721E79FE00039B867 /* AppDelegate.swift */,
 				F442F21921E79FE00039B867 /* ViewController.swift */,
 				F442F21B21E79FE00039B867 /* Main.storyboard */,
@@ -111,14 +99,6 @@
 				F442F22921E7A01B0039B867 /* Observables.playground */,
 			);
 			path = Observables;
-			sourceTree = "<group>";
-		};
-		F4E1984421ECEF0A00815E67 /* Subjects */ = {
-			isa = PBXGroup;
-			children = (
-				F4E1984521ECEF2E00815E67 /* Subjects.playground */,
-			);
-			path = Subjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

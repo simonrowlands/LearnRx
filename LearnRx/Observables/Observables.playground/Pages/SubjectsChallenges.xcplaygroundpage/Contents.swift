@@ -9,6 +9,7 @@ import RxSwift
 /*:
  * [Back to the Subjects page](@previous)
  * [Go to the Cheat Sheet](@next)
+ * [Go to the next chapter - Operators](Operators)
  */
 
 /*:
@@ -51,5 +52,5 @@ example(of: "Challenge 2: Replay Subject") {
 /*:
  [The answers are available here](@next)
  
- You can now move on to the Operators chapter!
+ You can now move on to the [Operators chapter](Operators)!
  */

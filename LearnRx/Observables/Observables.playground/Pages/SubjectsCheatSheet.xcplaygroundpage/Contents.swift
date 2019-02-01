@@ -6,6 +6,12 @@
 
 import RxSwift
 
+/*:
+ * [Go to the Subjects page](Subjects)
+ * [Go to the Challenges](SubjectsChallenges)
+ * [Go to the next chapter - Operators](Operators)
+ */
+
 //: ## CHALLENGE CHEAT SHEET
 
 //: ### Challenge 1: Publish Subject

@@ -6,6 +6,14 @@
 
 import RxSwift
 
+/*:
+ ### Page Links
+ 
+ [Go to the Operators page](Operators)
+ 
+ [Go to the Challenges](OperatorsChallenges)
+ */
+
 //: ### Challenge 1: Map
 
 example(of: "Challenge 1: Map") {

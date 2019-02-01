@@ -7,8 +7,11 @@
 import RxSwift
 
 /*:
- * [Back to the Operators page](@previous)
- * [Go to the Cheat Sheet](@next)
+ ### Page Links
+
+ [Back to the Operators page](@previous)
+ 
+ [Go to the Cheat Sheet](@next)
  */
 
 /*:
@@ -67,6 +70,6 @@ example(of: "Challenge 3: Filter") {
 
 /*:
  [The answers are available here](@next)
- 
- You have now completed all of the chapters, congratulations!
  */
+//: ## You have now completed all of the chapters
+//: # Congratulations!

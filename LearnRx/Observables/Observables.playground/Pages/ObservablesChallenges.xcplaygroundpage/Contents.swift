@@ -7,9 +7,13 @@
 import RxSwift
 
 /*:
- * [Back to the Observables page](@previous)
- * [Go to the Cheat Sheet](@next)
- * [Go to the next chapter - Subjects](Subjects)
+ ### Page Links
+
+ [Back to the Observables page](@previous)
+ 
+ [Go to the Cheat Sheet](@next)
+ 
+ [Go to the next chapter - Subjects](Subjects)
  */
 
 /*:

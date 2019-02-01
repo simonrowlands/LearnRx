@@ -7,9 +7,12 @@
 import RxSwift
 
 /*:
- * [Back to the Subjects page](@previous)
- * [Go to the Cheat Sheet](@next)
- * [Go to the next chapter - Operators](Operators)
+ ### Page Links
+ [Back to the Subjects page](@previous)
+ 
+ [Go to the Cheat Sheet](@next)
+ 
+ [Go to the next chapter - Operators](Operators)
  */
 
 /*:

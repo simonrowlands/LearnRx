@@ -7,9 +7,13 @@
 import RxSwift
 
 /*:
- * [Go to the Observables page](Observables)
- * [Go to the Challenges](ObservablesChallenges)
- * [Go to the next chapter - Subjects](Subjects)
+ ### Page Links
+
+ [Go to the Observables page](Observables)
+ 
+ [Go to the Challenges](ObservablesChallenges)
+ 
+ [Go to the next chapter - Subjects](Subjects)
  */
 
 //: ## CHALLENGE CHEAT SHEET

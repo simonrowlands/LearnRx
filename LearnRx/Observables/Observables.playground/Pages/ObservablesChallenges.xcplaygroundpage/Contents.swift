@@ -6,7 +6,19 @@
 
 import RxSwift
 
-/*      CHALLENGE 1a: Subscribe
+/*:
+ ### Page Links
+
+ [Back to the Observables page](@previous)
+ 
+ [Go to the Cheat Sheet](@next)
+ 
+ [Go to the next chapter - Subjects](Subjects)
+ */
+
+/*:
+ ## Challenges
+ ### Challenge 1a: Subscribe
  
  In this first challenge, you should attempt to subscribe to the below Observable using the onNext: handler.
  
@@ -19,22 +31,22 @@ example(of: "Challenge 1a: Subscribe") {
     
 }
 
-/* Extended
+/*:
+ ### Extended
  
  Once you have completed the challenge; for a look into how each of these Observable emission streams are created, try replacing the Observable with some of the following to see the console output. Note how three of them have identical outputs!
- 
- let observable = Observable.just(1)
- let observable = Observable.of(1, 2, 3)
- let observable = Observable.of([1, 2, 3])
- let observable = Observable.from([1, 2, 3])
- let observable = Observable.range(start: 1, count: 10)
+ */
+/*
+ Observable.just(1)
+ Observable.of(1, 2, 3)
+ Observable.of([1, 2, 3])
+ Observable.from([1, 2, 3])
+ Observable.range(start: 1, count: 10)
  */
 
 
-
-
-
-/*      CHALLENGE 1b: Do
+/*:
+ ### Challenge 1b: Do
  
  In the examples we used the .subscribe(onNext:) operator but for this challenge you should attempt to use the .do(...) operator in addition to (and notably before) the subscription. Try typing it out and use Xcodes autocomplete to see the various handlers it provides.
  
@@ -48,9 +60,13 @@ example(of: "Challenge 1b: Do") {
 }
 
 
+/*:
+ [Back to the Observables chapter](@previous)
+ */
 
 
-/*      CHALLENGE 2: Debug
+/*:
+ ### Challenge 2: Debug
  
  Once you have completed the above challenge, copy and paste the code into the below function.
  
@@ -68,11 +84,8 @@ example(of: "Challenge 1c: Debug") {
 }
 
 
-
-
-
-
-/*      CHALLENGE 2a: Single
+/*:
+ ### Challenge 2a: Single
  
  A good example to use is a function that loads text from a file, this may succeed with a value or fail with an error and so it is well suited to a Single.
  
@@ -103,11 +116,8 @@ func loadText(from filename: String) {
 }
 
 
-
-
-
-
-/*      CHALLENGE 2b
+/*:
+ ### Challenge 2b
  
  Now we have a function that returns a Single, we should create an example() function that handles the response.
  
@@ -118,6 +128,12 @@ func loadText(from filename: String) {
  Create a switch case on the response for the different events i.e. success/error
  */
 
-example(of: "Challenge 3b") {
+example(of: "Challenge 2b") {
     
 }
+
+/*:
+ [The answers are available here](@next)
+ 
+ You can now move on to the [Subjects chapter](Subjects)!
+ */

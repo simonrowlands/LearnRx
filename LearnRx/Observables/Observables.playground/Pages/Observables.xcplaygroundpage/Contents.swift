@@ -6,30 +6,33 @@
 
 import RxSwift
 
-/* RxSwift: What is it?
+/*:
+ ## RxSwift: What is it?
  
- In the words of Wikipedia, Reactive Programming is:
- A programming paradigm oriented around data flows and the propagation of change. This means that it should be possible to express static or dynamic data flows with ease in the programming languages used, and that the underlying execution model will automatically propagate changes through the data flow.
+ Using a summarised [Wikipedia](https://en.wikipedia.org/wiki/Reactive_programming) definition Reactive Programming is:
  
+ A programming paradigm oriented around data streams and the propagation of change. This means that it should be possible to express static or dynamic data flows with ease in the programming languages used, and that the underlying execution model will automatically propagate changes through the data flow.
+ - - -
  Or in short; Reactive programming is the idea that we can easily create data flows and automatically react to their changes.
- 
- RxSwift enables such behaviour using Observables, Subscriptions and Operators, all of which are covered in this project.
- 
- `Observable Sequences` or `Observables`, are the data flows we use to emit data events. Everything else in Rx is based on, or operates on these Observables. We use Subscriptions to receive and react to these data events and use Operators to perform logic on the data itself.
- 
- For now though, lets have a look at Observables and Subscriptions.
+ \
+ \
+ RxSwift enables such behaviour using `Observables`, `Subscriptions` and `Operators`, all of which are covered in this project.
+ \
+ \
+ `Observable Sequences` or `Observables`, are the data flows we use to emit data events. Everything else in Rx is based on, or operates on these `Observables`. We use `Subscriptions` to receive and react to these data events and use `Operators` to perform logic on the data itself.
+ \
+ \
+ For now though, lets have a look at `Observables` and `Subscriptions`.
  
  Run the playground up to each example to see what it is doing.
- */
-
-
-
-/*      Observables     */
-
-/*
- Here are some examples of how we can initialise an Observable.
+ - - -
  
- Note that once an Observable is initialised with a value, we cannot add new values into its stream, that is covered later in the chapter `Subjects`.
+ ## Observables
+ 
+ Here are some examples of how we can initialise an `Observable`.
+ 
+ Note that once an Observable is initialised with a value, we cannot add new values into its stream, that is covered later in the **Subjects** chapter.
+ 
  */
 
 example(of: "just, of, from, range") {
@@ -44,11 +47,11 @@ example(of: "just, of, from, range") {
      */
 }
 
-/*
- As mentioned before, we use Subscribers to receive/react to Observable emissions.
+/*:
+ As mentioned before, we use `Subscribers` to receive/react to Observable emissions.
  
- .subscribe provides several handlers for reacting to an Observable. In the example, we have only used (onNext:) to react to each emission.
- There are more handlers covered in this project.
+ `.subscribe` provides several handlers for reacting to an Observable. In the example below, we have only used (onNext:) to react to each emission.
+ There are more handlers covered later in this project.
  */
 
 example(of: "subscribe") {
@@ -64,9 +67,10 @@ example(of: "subscribe") {
 }
 
 
-/*
- An Empty observable is simply an observable with no elements to emit. As a type is required, we use `Void` to declare it.
- An Empty observable will never emit next events but will emit completed/terminated events.
+/*:
+ An `Empty` observable is simply an observable with no elements to emit. As a type is required, we use `Void` to declare it.
+ 
+ An `Empty` observable will never emit next events but will emit completed/terminated events.
  */
 
 example(of: "empty") {
@@ -80,9 +84,11 @@ example(of: "empty") {
 }
 
 
-/*
- A Never observable is similar to an Empty observable; it has no values and will not emit next events.
+/*:
+ A `Never` observable is similar to an `Empty` observable; it has no values and will not emit next events.
+ 
  The difference here though is that it does not emit completed events as it never terminates!
+ 
  Try running the playground; you will see that there is no "Completed" event log.
  */
 
@@ -98,22 +104,23 @@ example(of: "never") {
 
 
 
-/*      CHALLENGE
+/*:
+ - - -
+ ### CHALLENGE
  
- You should now be able to attempt Challenge 1a + 1b in the `ObservableChallenges` playground located in this group folder.
+ You should now be able to attempt **Challenge 1a + 1b** in the ObservableChallenges playground [here](@next).
+ 
  You can refer back to the above examples if needed, bonus points if you don't have to!
- 
- CHALLENGE       */
+ - - -
+ */
 
-
-
-
-/*
+/*:
+ ### Observables Continuation:
  Subscriptions in Rx are `Disposable` types. When you subscribe to an Observable, the Subscription keeps a strong reference to it.
  
  We need to dispose of these Subscriptions and Observables somehow to avoid memory leaks.
  
- RxSwift has its own deallocation method: dispose() as shown below.
+ RxSwift has its own deallocation method: `dispose()` as shown below.
  */
 
 example(of: "dispose") { // Manually disposing
@@ -125,9 +132,10 @@ example(of: "dispose") { // Manually disposing
     observable.dispose()
 }
 
-/*
+/*:
  There is a more convenient way of handling the disposal of subscriptions; the Rx class `DisposeBag`.
- DisposeBags track all of the Disposables that are added to them and disposes them when the DisposeBag is deinitialised.
+ 
+ - DisposeBags track all of the Disposables that are added to them and disposes them when the DisposeBag is deinitialised.
  */
 
 example(of: "DisposeBag") { // Automatically disposing
@@ -142,13 +150,15 @@ example(of: "DisposeBag") { // Automatically disposing
     }).disposed(by: disposeBag)
 }
 
-/*
- This does cause potential for a retain cycle however; you must be careful not to use strong reference to the Observables owner when using disposed(by:).
- 
+/*:
+ This does cause potential for a retain cycle however; you must be careful not to use strong reference to the Observables owner when using `disposed(by:)`.
+ \
+ \
  In a ViewController scenario; the ViewController has a strong reference to the DisposeBag, the DisposeBag has a strong reference to the Subscription and the Subscription, in theory, could have a strong reference to the ViewController.
  
- You can avoid this by manually using .dispose() or more simply using a weak reference within the Subscription.
- 
+ You can avoid this by manually using `.dispose()` or more simply using a weak reference within the Subscription.
+ \
+ \
  Below is an example of a retain cycle and its non retain-cycle counterpart.
  */
 
@@ -178,8 +188,8 @@ example(of: "DisposeBag retain cycle") {
     }
 }
 
-/*
- Using the .deferred operator, you can create a factory that returns an Observable within its closure.
+/*:
+ Using the `.deferred` operator, you can create a factory that returns an Observable within its closure.
  
  
  This allows us to use a different Observable depending on a condition or a state, in the below example we are returning a different Observable depending on the state of the `flip` bool.
@@ -216,12 +226,12 @@ example(of: "deferred") {
     subscribe(to: factory) // Flips the bool, prints 1 2 3
 }
 
-/*
+/*:
  Now we have looked at some of the available initializers for Observables, it is time to create our own!
  
- The .create() method allows us to implement the result of calling .subscribe on the Observable.
+ The `.create()` method allows us to implement the result of calling .subscribe on the Observable.
  
- As mentioned earlier, Subscriptions are actually of Disposable type and .create() requires a Disposable to be returned. We can use the convenience Disposable initializer: Disposables.create()
+ As mentioned earlier, Subscriptions are actually of Disposable type and `.create()` requires a Disposable to be returned. We can return the convenience Disposable initializer: Disposables.create()
  */
 
 example(of: "create") {
@@ -245,11 +255,16 @@ example(of: "create") {
         }).disposed(by: disposeBag)
 }
 
-/* There are three kinds of Observable traits in RxSwift: Completable, Single, and Maybe. */
+/*:
+ - - -
+ ## Observable Traits
+ There are three kinds of Observable traits in RxSwift: `Completable`, `Single`, and `Maybe`.
+ */
 
-/* Completables
+/*:
+ ### Completable
  
- A Completable will emit a .completed OR .error event.
+ A `Completable` will emit a `.completed` OR an `.error` event.
  
  You could use a completable when you only care that an operation completed successfully or failed, such as a file write.
  */
@@ -286,11 +301,12 @@ example(of: "Completable") {
         }.disposed(by: disposeBag)
 }
 
-/* Singles
- Singles will emit either a .success(value) or an .error event.
- It functions in the same way as a Completable except it emits a value on its completion.
+/*:
+ ### Single
+ `Singles` will emit either a `.success(value)` OR an `.error` event.
+ It functions in the same way as a `Completable` except it emits a value on its completion.
  
- The .success(value) is a combination of a .next and .completed event.
+ The `.success(value)` is a combination of a `.next` and `.completed` event.
  
  This is useful for one-time processes that will either succeed and yield a value or fail, such as downloading data or loading it from disk.
  */
@@ -327,10 +343,11 @@ example(of: "Single") {
         }.disposed(by: disposeBag)
 }
 
-/* Maybe
- Maybe is a combination of a Single and Completable, it can either emit a .success(value), .completed, or an .error.
+/*:
+ ### Maybe
+ `Maybe` is a combination of a `Single` and `Completable`, it can either emit a `.success(value)`, `.completed` or an `.error`.
  
- If you need to implement an operation that could either succeed with a value, complete without a value or error then you should use Maybe.
+ If you need to implement an operation that could either succeed with a value, complete without a value or throw an aerror then you should use `Maybe`.
  */
 
 example(of: "Maybe") {
@@ -372,10 +389,14 @@ example(of: "Maybe") {
         }.disposed(by: disposeBag)
 }
 
-/*      CHALLENGE
+/*:
+ - - -
+ ### CHALLENGE
  
- To finish off the Observables chapter you should now be able to attempt challenges 2a & 2b in the `ObservableChallenges` playground located in this group folder.
+ To finish off the Observables chapter you should now be able to attempt **Challenge 2a & 2b** in the challenges page.
  
  You can refer back to the above examples if needed, as always bonus points if you don't have to!
  
- CHALLENGE       */
+ [Link to the Challenges](@next)
+ - - -
+*/

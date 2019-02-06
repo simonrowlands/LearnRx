@@ -6,29 +6,30 @@
 
 import RxSwift
 
-/*      SUBJECTS
+/*:
+ ## SUBJECTS
  
  When you create an Observable it only emits an output. You can subscribe to an observables output, but you cannot alter it.
  
- A Subject is an Observable which can also take new inputs; meaning that you can manually emit new elements.
+ A `Subject` is an Observable which can also take new inputs; meaning that you can manually emit new elements.
  
  Similar to Observables, Subjects have several traits available to them. These traits are:
  
- Publish Subject
- Replay Subject
- Behaviour Subject
+ - Publish Subject
  
- // Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here.
+ - Replay Subject
+ 
+ - Behaviour Subject
+ 
+ - Variable - This will be/has been deprecated due to inconsistencies and so will not be covered here.
  
  The Subject traits all emit stop/completed events in the same way, they differ however in the way that they emit next events.
  
  All subject traits will re-emit stop/completed events to new subscribers meaning that all future subscribers will be immediately notified that a subject has been terminated.
  */
 
-
-
-
-/*      Publish Subject
+/*:
+ ### Publish Subject
  
  Publish Subjects only emit new values to subscribers. It will not replay any previously emitted values.
  
@@ -54,7 +55,8 @@ example(of: "Publish Subject") {
 }
 
 
-/*      Behaviour Subject
+/*:
+ ### Behaviour Subject
  
  Behaviour Subjects differ to Publish Subjects in the way that they also emit the last value emitted.
  This means that a new subscriber will receive the last emission when it subscribes, in addition to any future values.
@@ -78,7 +80,8 @@ example(of: "Behaviour Subject") {
 }
 
 
-/*      Replay Subject
+/*:
+ ### Replay Subject
  
  Behaviour Subjects differ to Behaviour Subjects in the way that they emit the all previous emitted values up to their buffer size.
  This means that a new subscriber will receive all of the previous values when it subscribes, up to the buffer limit, in addition to any future values.
@@ -104,7 +107,14 @@ example(of: "Replay Subject") {
     subject.onNext("Number five")
 }
 
-/*
- To complete this chapter, attempt the challenges in the SubjectsChallenges playground located within this folder.
+/*:
+ - - -
+ ### CHALLENGE
+ 
+ To complete this chapter attempt **Challenge 1 & 2** in the challenges page.
+ 
  There are only two challenges!
+
+ [Link to the Challenges](@next)
+ - - -
  */
